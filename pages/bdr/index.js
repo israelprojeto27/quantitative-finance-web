@@ -8,6 +8,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
+import { Button } from '@mui/material'
+
 import { makeStyles } from '@material-ui/styles';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
@@ -53,6 +56,13 @@ function Bdr({ list }) {
 
     const [rowsList, setRowsList] = useState([]);
 
+    function handleDetail(row) {       
+        router.push({
+            pathname:  '/bdr/detail',
+            query: { sigla: row.sigla },
+        }) 
+    }
+
     useEffect(() => {
         setRowsList(list)
     }, []);
@@ -85,7 +95,7 @@ function Bdr({ list }) {
                                             {row.dataUltimoDividendo}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                        
+                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                        
                                         </TableCell>
                                     </TableRow>
                                 );

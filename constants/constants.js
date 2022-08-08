@@ -11,4 +11,8 @@ export const EXTRATO_URL = BASE_URL + '/extrato';
 
 export const BDR_URL = BASE_URL + '/bdr';
 
+export const BDR_COTACAO_URL = BASE_URL + '/cotacao-bdr';
+
+
+
 
