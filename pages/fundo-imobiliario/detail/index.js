@@ -12,7 +12,7 @@ import { withRouter } from 'next/router';
 
 
 import { useRouter } from 'next/router'
-import { BDR_URL, BDR_COTACAO_URL } from '../../../constants/constants';
+import { FUNDO_IMOBILIARIO_URL, FUNDO_IMOBILIARIO_COTACAO_URL } from '../../../constants/constants';
 import TabListCotacoesDiarias from './TabListCotacoesDiarias';
 import TabListCotacoesSemanais from './TabListCotacoesSemanais';
 import TabListCotacoesMensais from './TabListCotacoesMensais';
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     }
 });  
 
-function index({detalheBdr}) {
+function index({detalheFundo}) {
     const [value, setValue] = useState('1');    
     const classes = useStyles();    
       
@@ -42,12 +42,12 @@ function index({detalheBdr}) {
     };
 
     useEffect(() => { 
-        setDetail(detalheBdr)
+        setDetail(detalheFundo)
     }, [router.query]);
 
     return (
         <Layout>
-            Tela de Detalhes do BDR
+            Tela de Detalhes do Fundo Imobiliario
 
             <br></br> <br></br>
 
@@ -65,27 +65,27 @@ function index({detalheBdr}) {
                         </TabList>
                     </Box>
                     <TabPanel value="1">
-                        <TabListCotacoesDiarias list={detalheBdr.listCotacaoDiario}  />
+                        <TabListCotacoesDiarias list={detalheFundo.listCotacaoDiario}  />
                     </TabPanel>
 
                     <TabPanel value="2">
-                        <TabListCotacoesSemanais list={detalheBdr.listCotacaoSemanal}  />                    
+                        <TabListCotacoesSemanais list={detalheFundo.listCotacaoSemanal}  />                    
                     </TabPanel>
 
                     <TabPanel value="3">
-                         <TabListCotacoesMensais list={detalheBdr.listCotacaoMensal}   />                    
+                         <TabListCotacoesMensais list={detalheFundo.listCotacaoMensal}   />                    
                     </TabPanel>
                     <TabPanel value="4">
-                         <TabListIncreasePercentDiario list={detalheBdr.listIncreasePercentDiario}  />
+                         <TabListIncreasePercentDiario list={detalheFundo.listIncreasePercentDiario}  />
                     </TabPanel>
                     <TabPanel value="5">
-                        <TabListIncreasePercentSemanal list={detalheBdr.listIncreasePercentSemanal}  />
+                        <TabListIncreasePercentSemanal list={detalheFundo.listIncreasePercentSemanal}  />
                     </TabPanel>
                     <TabPanel value="6">
-                        <TabListIncreasePercentMensal list={detalheBdr.listIncreasePercentMensal}  />
+                        <TabListIncreasePercentMensal list={detalheFundo.listIncreasePercentMensal}  />
                     </TabPanel>
                     <TabPanel value="7">
-                        <TabListDividendos list={detalheBdr.listDividendos}  />                    
+                        <TabListDividendos list={detalheFundo.listDividendos}  />                    
                     </TabPanel>
                 </TabContext>
             </Box>
@@ -98,11 +98,11 @@ export default index;
 export async function getServerSideProps({ query }) {
     
     const sigla = query.sigla
-    const res = await fetch(BDR_COTACAO_URL + '/cotacao-full-by-sigla/'+sigla)
-    const detalheBdr = await res.json()        
+    const res = await fetch(FUNDO_IMOBILIARIO_COTACAO_URL + '/cotacao-full-by-sigla/'+sigla)
+    const detalheFundo = await res.json()        
     return {
       props: {
-        detalheBdr
+        detalheFundo
       }, // will be passed to the page component as props
     }
 }

@@ -7,6 +7,8 @@ export const ACAO_COTACAO_URL = BASE_URL + '/cotacao-acao';
 
 export const FUNDO_IMOBILIARIO_URL = BASE_URL + '/fundo-imobiliario';
 
+export const FUNDO_IMOBILIARIO_COTACAO_URL = BASE_URL + '/cotacao-fundo';
+
 export const EXTRATO_URL = BASE_URL + '/extrato';
 
 export const BDR_URL = BASE_URL + '/bdr';

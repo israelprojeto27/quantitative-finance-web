@@ -11,6 +11,12 @@ import TableRow from '@mui/material/TableRow';
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import { Button } from '@mui/material'
 
+import TextField from '@mui/material/TextField';
+
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+
 import { makeStyles } from '@material-ui/styles';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
@@ -55,21 +61,65 @@ function Acoes({ list }) {
 
     const [rowsList, setRowsList] = useState([]);
 
+    const [searchPapel, setSearchPapel] = useState('');
+
     useEffect(() => {
         setRowsList(list)
     }, []);
 
-    function handleDetail(row) {       
+    function handleDetail(row) {
         router.push({
-            pathname:  '/acoes/detail',
+            pathname: '/acoes/detail',
             query: { sigla: row.sigla },
-        }) 
+        })
+    }
+
+    const handleSearchPapel = async () => {
+        setRowsList([])
+        if (searchPapel !== '') {
+            const res = await fetch(ACAO_URL + '/info-gerais-by-sigla/' + searchPapel )
+            const list = await res.json()
+            setRowsList(list)
+        }
+        else {
+            const res = await fetch(ACAO_URL + '/info-gerais')
+            const list = await res.json()
+            setRowsList(list)
+        }
+    }
+
+    function handleChange(event, field) {
+        if (field === 'searchPapel') {
+            setSearchPapel(event.currentTarget.value);
+        }
     }
 
 
     return (
         <Layout title="Quantitative System">
             <h1>Lista de Acoes</h1>
+
+            <br></br> <br></br>
+
+            <TextField
+                className={classes.buttonSearch}
+                placeholder="Informe um valor"
+                size="small"
+                defaultValue=""
+                value={searchPapel}
+                onChange={(e) => handleChange(e, 'searchPapel')}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment>
+                            <IconButton>
+                                <SearchIcon onClick={handleSearchPapel} />
+                            </IconButton>
+                        </InputAdornment>
+                    )
+                }}
+            />
+
+            <br></br> <br></br>
 
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 1040 }}>
@@ -95,7 +145,7 @@ function Acoes({ list }) {
                                             {row.dataUltimoDividendo}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                        
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>
                                         </TableCell>
                                     </TableRow>
                                 );
