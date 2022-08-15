@@ -26,7 +26,17 @@ const useStyles = makeStyles({
     tabselect: {
         background: 'green',
         color: 'white'
-    }
+    },
+    box: {
+        paddingTop: '20px'
+    },
+    text: {
+        paddingTop: '15px'
+    },
+    button: {
+        paddingTop: '25px',
+        maxWidth: '850px'
+    },
 });  
 
 function index({detalheAcao}) {

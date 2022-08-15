@@ -17,6 +17,13 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Menu from '@mui/material/Menu';
+
 import { makeStyles } from '@material-ui/styles';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
@@ -63,6 +70,12 @@ function Acoes({ list }) {
 
     const [searchPapel, setSearchPapel] = useState('');
 
+    const [selectOrdenacao, setSelectOrdenacao] = useState('-');
+    const [selectTipoOrdenacao, setSelectTipoOrdenacao] = useState('crescente');
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [open, setOpen] = useState(false);
+
     useEffect(() => {
         setRowsList(list)
     }, []);
@@ -77,7 +90,7 @@ function Acoes({ list }) {
     const handleSearchPapel = async () => {
         setRowsList([])
         if (searchPapel !== '') {
-            const res = await fetch(ACAO_URL + '/info-gerais-by-sigla/' + searchPapel )
+            const res = await fetch(ACAO_URL + '/info-gerais-by-sigla/' + searchPapel)
             const list = await res.json()
             setRowsList(list)
         }
@@ -94,6 +107,36 @@ function Acoes({ list }) {
         }
     }
 
+    function handleChangeSelect(event, select) {
+        if (select === 'ordenacao') {
+            setSelectOrdenacao(event.target.value);
+        }
+        else if (select === 'tipoOrdenacao') {
+            setSelectTipoOrdenacao(event.target.value);
+        }
+    };
+
+    const handleFilter = async () => {
+        setRowsList([]);
+        const res = await fetch(ACAO_URL + '/filter-info-gerais?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
+        const list = await res.json()
+        setRowsList(list)
+    }
+
+    function handleClickMenu(event) {
+        setAnchorEl(event.currentTarget);
+        setOpen(true)
+    }
+
+    function handleCloseMenu() {
+        setOpen(false);
+    }
+
+    function handleSelect(event, select) {
+        if ( select === 'mapaDividendos'){
+            router.push('/acoes/mapa-dividendos')
+        }        
+    };
 
     return (
         <Layout title="Quantitative System">
@@ -101,23 +144,112 @@ function Acoes({ list }) {
 
             <br></br> <br></br>
 
-            <TextField
-                className={classes.buttonSearch}
-                placeholder="Informe um valor"
-                size="small"
-                defaultValue=""
-                value={searchPapel}
-                onChange={(e) => handleChange(e, 'searchPapel')}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment>
-                            <IconButton>
-                                <SearchIcon onClick={handleSearchPapel} />
-                            </IconButton>
-                        </InputAdornment>
-                    )
-                }}
-            />
+            <table>
+                <tr>
+                    <td>
+                        <TextField
+                            className={classes.buttonSearch}
+                            placeholder="Informe um valor"
+                            size="small"
+                            defaultValue=""
+                            value={searchPapel}
+                            onChange={(e) => handleChange(e, 'searchPapel')}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment>
+                                        <IconButton>
+                                            <SearchIcon onClick={handleSearchPapel} />
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
+                    </td>
+
+                    <td>
+                        <Box className={classes.boxSelect} >
+                            <FormControl fullWidth size="small">
+                                <InputLabel id="demo-simple-select-label">Ordenar por</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={selectOrdenacao}
+                                    label="Ordernar por"
+                                    onChange={(e) => handleChangeSelect(e, 'ordenacao')}
+                                >
+                                    <MenuItem value={'-'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Selecione uma opção</fontSize></MenuItem>
+                                    <MenuItem value={'valorUltCotacao'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Última Cotação R$</fontSize></MenuItem>
+                                    <MenuItem value={'dataUltCotacao'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Última Cotação</fontSize></MenuItem>
+                                    <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
+                                    <MenuItem value={'dataUltiDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Último Dividendo</fontSize></MenuItem>
+                                </Select>
+
+                            </FormControl>
+                        </Box>
+                    </td>
+
+                    <td>
+                        <Box className={classes.boxSelect} >
+                            <FormControl fullWidth size="small">
+                                <InputLabel id="demo-simple-select-label">Tipo Ordenação</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={selectTipoOrdenacao}
+                                    label="Tipo Ordenação"
+                                    onChange={(e) => handleChangeSelect(e, 'tipoOrdenacao')}
+                                >
+                                    <MenuItem value={'crescente'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Crescente</fontSize></MenuItem>
+                                    <MenuItem value={'decrescente'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Decrescente</fontSize></MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </td>
+
+                    <td>
+                        <Button
+                            id="basic-button"
+                            variant="contained"
+                            aria-haspopup="true"
+                            onClick={handleFilter}
+                            className={classes.text}
+                        >
+                            Filtrar
+                        </Button>
+
+                    </td>
+
+                    <td className={classes.cardTd}>
+                        <Button
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            variant="contained"
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={(e) => handleClickMenu(e)}
+                            className={classes.text}
+                        >
+                            Funcionalidades
+                        </Button>
+
+                        <Menu
+                            id="basic-menu"
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleCloseMenu}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularGanhosDividendos')}>Simular Ganhos Dividendos</MenuItem>
+
+                        </Menu>
+                    </td>
+                </tr>
+            </table>
+
+
 
             <br></br> <br></br>
 
