@@ -138,6 +138,12 @@ function FundoImobiliario({ list }) {
         if ( select === 'mapaDividendos'){
             router.push('/fundo-imobiliario/mapa-dividendos')
         }        
+        else if ( select === 'simularValorInvest'){            
+            router.push('/fundo-imobiliario/simular-valor-invest')
+        }  
+        else if ( select === 'simularValorRendimentoCotas'){            
+            router.push('/fundo-imobiliario/simular-valor-rendimento-cotas')
+        }  
     };
     
 
@@ -245,7 +251,8 @@ function FundoImobiliario({ list }) {
                             }}
                         >
                             <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
-                            <MenuItem onClick={(e) => handleSelect(e, 'simularGanhosDividendos')}>Simular Ganhos Dividendos</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
 
                         </Menu>
                     </td>

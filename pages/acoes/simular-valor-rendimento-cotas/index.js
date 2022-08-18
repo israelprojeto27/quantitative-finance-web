@@ -1,34 +1,36 @@
-import Layout from '../../components/Layout'
+import Layout from "../../../components/Layout";
+
+
+import TextField from '@mui/material/TextField';
+import { Button } from '@mui/material'
+import Box from '@mui/material/Box';
+
+import { makeStyles } from '@material-ui/styles';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router'
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
+
 import TableRow from '@mui/material/TableRow';
 
-import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
-import { Button } from '@mui/material'
-
-import TextField from '@mui/material/TextField';
-
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Menu from '@mui/material/Menu';
 
-import { makeStyles } from '@material-ui/styles';
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router'
-import HeadList from '../../components/HeadList/HeadList';
-import { BDR_URL } from '../../constants/constants';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+
+import { ACAO_URL } from '../../../constants/constants';
+
+import  HeadListResult  from './components/HeadListResult'
+
 
 
 const useStyles = makeStyles({
@@ -38,9 +40,9 @@ const useStyles = makeStyles({
     paddingDialogCell: {
         paddingRight: '20px'
     },
-    buttonAdd: {
-        paddingTop: '20px',
-        paddingBottom: '25px'
+    buttonSimulate: {
+        paddingTop: '50px',
+        maxWidth: '500px'
     },
     buttonSearch: {
         paddingLeft: '20px',
@@ -60,52 +62,57 @@ const useStyles = makeStyles({
     },
     cardTd: {
         paddingLeft: '10px'
+    },
+    table: {
+        paddingBottom: '20px'
     }
 });
 
-function Bdr({ list }) {
+
+function SimularValorRendimentoCotas() {
+
     const classes = useStyles();
     const router = useRouter();
 
+    const [valorInvestimento, setValorInvestimento] = useState('');
     const [rowsList, setRowsList] = useState([]);
-    
+ 
     const [searchPapel, setSearchPapel] = useState('');
-
     const [selectOrdenacao, setSelectOrdenacao] = useState('-');
     const [selectTipoOrdenacao, setSelectTipoOrdenacao] = useState('crescente');
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [open, setOpen] = useState(false);
-
-    function handleDetail(row) {       
-        router.push({
-            pathname:  '/bdr/detail',
-            query: { sigla: row.sigla },
-        }) 
-    }
-
-    useEffect(() => {
-        setRowsList(list)
-    }, []);
-
-    const handleSearchPapel = async () => {
-        setRowsList([])
-        if (searchPapel !== '') {
-            const res = await fetch(BDR_URL + '/info-gerais-by-sigla/' + searchPapel )
-            const list = await res.json()
-            setRowsList(list)
-        }
-        else {
-            const res = await fetch(BDR_URL + '/info-gerais')
-            const list = await res.json()
-            setRowsList(list)
-        }
-    }
-
     function handleChange(event, field) {
-        if (field === 'searchPapel') {
+        if (field === 'valorInvestimento') {
+            setValorInvestimento(event.currentTarget.value);
+        } 
+        else if (field === 'searchPapel') {
             setSearchPapel(event.currentTarget.value);
-        }
+        } 
+    }
+
+    function goBack() {
+        router.push('/acoes');
+    }
+
+    const handleSubmit = async () => {
+        setRowsList([])
+        const res = await fetch(ACAO_URL + '/simula-rendimento-por-cotas/' + valorInvestimento  + '/')        
+        const list = await res.json()        
+        setRowsList(list)
+    }
+
+    const handleFilter = async () => {
+        setRowsList([]);
+        const res = await fetch(ACAO_URL + '/filter-simula-rendimento-por-cotas/' + valorInvestimento  + '/?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
+        const list = await res.json()
+        setRowsList(list)
+    }
+
+    const handleFilterSigla = async () => {
+        setRowsList([]);
+        const res = await fetch(ACAO_URL + '/simula-rendimento-por-cotas-by-sigla/' + valorInvestimento  + '/' + searchPapel)
+        const list = await res.json()
+        setRowsList(list)
     }
 
     function handleChangeSelect(event, select) {
@@ -117,47 +124,44 @@ function Bdr({ list }) {
         }
     };
 
-    const handleFilter = async () => {
-        setRowsList([]);
-        const res = await fetch(BDR_URL + '/filter-info-gerais?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
-        const list = await res.json()
-        setRowsList(list)      
-    }
-
-    function handleClickMenu(event) {
-        setAnchorEl(event.currentTarget);
-        setOpen(true)
-    }
-
-    function handleCloseMenu() {
-        setOpen(false);
-    }
-
-
-    function handleSelect(event, select) {
-        if ( select === 'mapaDividendos'){
-            router.push('/bdr/mapa-dividendos')
-        }  
-        else if ( select === 'simularValorInvest'){            
-            router.push('/bdr/simular-valor-invest')
-        }        
-        else if ( select === 'simularValorRendimentoCotas'){            
-            router.push('/bdr/simular-valor-rendimento-cotas')
-        }   
-    };
-
     return (
         <Layout title="Quantitative System">
-            <h1>Lista de BDRs</h1>
+            <h1>Simulação Valor Rendimento por Quantidade de Cotas e Dividendos - Ações</h1>
 
             <br></br> <br></br>
 
-            <table>
+            <Box
+                component="form"
+                sx={{
+                    '& .MuiTextField-root': { m: 1, width: '95ch' },
+                }}
+                noValidate
+                autoComplete="off"
+                className={classes.box}>
+
+                <div className={classes.text}>
+                    <TextField
+                        id="outlined-required"
+                        label="Valor Investimento R$"
+                        value={valorInvestimento}
+                        onChange={(e) => handleChange(e, 'valorInvestimento')}
+                    />
+                </div> 
+
+                <div className={classes.buttonSimulate}>
+                    <Button variant="contained" fullWidth="true" onClick={handleSubmit}>Gerar Simulação</Button>
+                </div>
+
+            </Box>
+
+            <br></br>       <br></br>
+
+            <table className={classes.table}>
                 <tr>
                     <td>
                         <TextField
                             className={classes.buttonSearch}
-                            placeholder="Informe um valor"
+                            placeholder="Informe uma sigla"
                             size="small"
                             defaultValue=""
                             value={searchPapel}
@@ -166,7 +170,7 @@ function Bdr({ list }) {
                                 endAdornment: (
                                     <InputAdornment>
                                         <IconButton>
-                                            <SearchIcon onClick={handleSearchPapel} />
+                                            <SearchIcon onClick={handleFilterSigla} />
                                         </IconButton>
                                     </InputAdornment>
                                 )
@@ -186,6 +190,7 @@ function Bdr({ list }) {
                                     onChange={(e) => handleChangeSelect(e, 'ordenacao')}
                                 >
                                     <MenuItem value={'-'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Selecione uma opção</fontSize></MenuItem>
+                                    <MenuItem value={'valorRendimento'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Rendimento R$</fontSize></MenuItem>                                    
                                     <MenuItem value={'valorUltCotacao'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Última Cotação R$</fontSize></MenuItem>
                                     <MenuItem value={'dataUltCotacao'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Última Cotação</fontSize></MenuItem>
                                     <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
@@ -216,52 +221,23 @@ function Bdr({ list }) {
 
                     <td>
                         <Button
-                            id="basic-button"                            
+                            id="basic-button"
                             variant="contained"
-                            aria-haspopup="true"                            
+                            aria-haspopup="true"
                             onClick={handleFilter}
                             className={classes.text}
                         >
-                           Filtrar
+                            Filtrar
                         </Button>
-
-                    </td>
-                    <td className={classes.cardTd}>
-                        <Button
-                            id="basic-button"
-                            aria-controls={open ? 'basic-menu' : undefined}
-                            variant="contained"
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={(e) => handleClickMenu(e)}
-                            className={classes.text}
-                        >
-                            Funcionalidades
-                        </Button>
-
-                        <Menu
-                            id="basic-menu"
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleCloseMenu}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
-                            <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
-                            <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
-                        </Menu>
-                    </td>
+                    </td>                  
                 </tr>
             </table>
 
-            <br></br> <br></br>
 
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 1040 }}>
                     <Table stickyHeader aria-label="sticky table">
-                        <HeadList />
+                        <HeadListResult />
                         <TableBody>
                             {rowsList.map((row) => {
                                 return (
@@ -270,19 +246,25 @@ function Bdr({ list }) {
                                             {row.sigla}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            {row.valorUltimaCotacao}
+                                            {row.valorRendimentoFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            {row.dataUltimaCotacao}
+                                            {row.quantidadeCotasFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            {row.valorUltimoDividendo}
+                                            {row.valorUltimaCotacaoFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            {row.dataUltimoDividendo}
+                                            {row.dataUltimaCotacaoFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                        
+                                            {row.valorUltimoDividendoFmt}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.dataUltimoDividendoFmt}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            
                                         </TableCell>
                                     </TableRow>
                                 );
@@ -293,18 +275,9 @@ function Bdr({ list }) {
                 </TableContainer>
             </Paper>
 
+
         </Layout>
     );
 }
 
-export default Bdr;
-
-export async function getStaticProps(context) {
-    const res = await fetch(BDR_URL + '/info-gerais')
-    const list = await res.json()
-    return {
-        props: {
-            list
-        }, // will be passed to the page component as props
-    }
-}
+export default SimularValorRendimentoCotas;

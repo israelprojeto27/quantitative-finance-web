@@ -136,6 +136,12 @@ function Acoes({ list }) {
         if ( select === 'mapaDividendos'){
             router.push('/acoes/mapa-dividendos')
         }        
+        else if ( select === 'simularValorInvest'){            
+            router.push('/acoes/simular-valor-invest')
+        }    
+        else if ( select === 'simularValorRendimentoCotas'){            
+            router.push('/acoes/simular-valor-rendimento-cotas')
+        }               
     };
 
     return (
@@ -242,8 +248,8 @@ function Acoes({ list }) {
                             }}
                         >
                             <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
-                            <MenuItem onClick={(e) => handleSelect(e, 'simularGanhosDividendos')}>Simular Ganhos Dividendos</MenuItem>
-
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
                         </Menu>
                     </td>
                 </tr>
