@@ -142,7 +142,11 @@ function Acoes({ list }) {
         else if ( select === 'simularValorRendimentoCotas'){            
             router.push('/acoes/simular-valor-rendimento-cotas')
         }               
+        else if ( select === 'simularInvestimentoVariasAcoes'){            
+            router.push('/acoes/simular-investimento-varias-acoes')
+        }               
     };
+
 
     return (
         <Layout title="Quantitative System">
@@ -250,6 +254,7 @@ function Acoes({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariasAcoes')}>Simular Investimento Várias Ações</MenuItem>
                         </Menu>
                     </td>
                 </tr>

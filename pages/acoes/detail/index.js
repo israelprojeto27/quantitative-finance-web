@@ -20,6 +20,8 @@ import TabListIncreasePercentMensal from './TabListIncreasePercentMensal';
 import TabListIncreasePercentDiario from './TabListIncreasePercentDiario';
 import TabListIncreasePercentSemanal from './TabListIncreasePercentSemanal';
 import TabListDividendos from './TabListDividendos';
+import TabValorRendimentoDividendos from './TabValorRendimentoDividendos';
+import TabValorRendimentoDividendosQuantCotas from './TabValorRendimentoDividendosQuantCotas';
 
 
 const useStyles = makeStyles({
@@ -68,10 +70,12 @@ function index({detalheAcao}) {
                             <Tab label="Cotações Diárias" onClick={() => handleChange('1')} className={value === '1' ? (classes.tabselect) : ("")} />
                             <Tab label="Cotações Semanais" onClick={() => handleChange('2')} className={value === '2' ? (classes.tabselect) : ("")} />
                             <Tab label="Cotações Mensais" onClick={() => handleChange('3')} className={value === '3' ? (classes.tabselect) : ("")} />
-                            <Tab label="Porcentagem Crescimento (Diario)" onClick={() => handleChange('4')} className={value === '4' ? (classes.tabselect) : ("")} />
-                            <Tab label="Porcentagem Crescimento (Semanal)" onClick={() => handleChange('5')} className={value === '5' ? (classes.tabselect) : ("")} />
-                            <Tab label="Porcentagem Crescimento (Mensal)" onClick={() => handleChange('6')} className={value === '6' ? (classes.tabselect) : ("")} />
+                            <Tab label="% Crescimento (Diario)" onClick={() => handleChange('4')} className={value === '4' ? (classes.tabselect) : ("")} />
+                            <Tab label="% Crescimento (Semanal)" onClick={() => handleChange('5')} className={value === '5' ? (classes.tabselect) : ("")} />
+                            <Tab label="% Crescimento (Mensal)" onClick={() => handleChange('6')} className={value === '6' ? (classes.tabselect) : ("")} />
                             <Tab label="Dividendos" onClick={() => handleChange('7')} className={value === '7' ? (classes.tabselect) : ("")} />
+                            <Tab label="Simulação Rendimento Dividendos " onClick={() => handleChange('8')} className={value === '8' ? (classes.tabselect) : ("")} />
+                            <Tab label="Simulação Rendimento Dividendos por Cotas" onClick={() => handleChange('9')} className={value === '9' ? (classes.tabselect) : ("")} />
                         </TabList>
                     </Box>
                     <TabPanel value="1">
@@ -97,6 +101,14 @@ function index({detalheAcao}) {
                     <TabPanel value="7">
                         <TabListDividendos list={detalheAcao.listDividendos}  />                    
                     </TabPanel>
+                    <TabPanel value="8">
+                        <TabValorRendimentoDividendos ativo={detalheAcao.sigla} />                    
+                    </TabPanel>
+                    <TabPanel value="9">
+                        <TabValorRendimentoDividendosQuantCotas  ativo={detalheAcao.sigla}/>                    
+                    </TabPanel>
+
+                    
                 </TabContext>
             </Box>
         </Layout>                
