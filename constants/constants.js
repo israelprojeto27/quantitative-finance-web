@@ -15,6 +15,8 @@ export const FUNDO_IMOBILIARIO_DIVIDENDO_URL = BASE_URL + '/dividendo-fundo';
 
 export const FUNDO_IMOBILIARIO_COTACAO_URL = BASE_URL + '/cotacao-fundo';
 
+export const FUNDO_IMOBILIARIO_SIMULACAO_INVESTIMENTO_URL = BASE_URL + '/simula-investimento-fundo-imobiliario';
+
 export const EXTRATO_URL = BASE_URL + '/extrato';
 
 export const BDR_URL = BASE_URL + '/bdr';
@@ -23,6 +25,7 @@ export const BDR_DIVIDENDO_URL = BASE_URL + '/dividendo-bdr';
 
 export const BDR_COTACAO_URL = BASE_URL + '/cotacao-bdr';
 
+export const BDR_SIMULACAO_INVESTIMENTO_URL = BASE_URL + '/simula-investimento-bdr';
 
 
 

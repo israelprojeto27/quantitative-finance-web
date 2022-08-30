@@ -30,7 +30,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
-import { ACAO_SIMULACAO_INVESTIMENTO_URL } from '../../../constants/constants'
+import { FUNDO_IMOBILIARIO_SIMULACAO_INVESTIMENTO_URL } from '../../../constants/constants'
 
 const useStyles = makeStyles({
     paddingDialogRow: {
@@ -89,7 +89,7 @@ export const columnsListDividendos = [
     { id: 3, label: 'Siglas Envolvidas', align: 'left', minWidth: 10, },    
 ];
 
-function SimularInvestimentoVariasAcoes({ simulacao }) {
+function SimularInvestimentoVariosFundosImobiliarios({ simulacao }) {
 
     const classes = useStyles();
     const router = useRouter();
@@ -113,7 +113,7 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
 
     
     const handleUpdateValorInvestimento = async () => {
-        const response = await fetch(ACAO_SIMULACAO_INVESTIMENTO_URL, {
+        const response = await fetch(FUNDO_IMOBILIARIO_SIMULACAO_INVESTIMENTO_URL, {
             method: 'POST',
             body: JSON.stringify(
                 {                
@@ -124,12 +124,12 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
             }
         })
         const data = await response.json()        
-        router.push('/acoes/simular-investimento-varias-acoes')               
+        router.push('/fundo-imobiliario/simular-investimento-varios-fundos')               
     }
 
     const handleSubmitGerarSimulacao = async () => {    
         setOpenResult(false)
-        const res = await fetch(ACAO_SIMULACAO_INVESTIMENTO_URL + '/simula-investivemento/' + periodoInicio + '/' + periodoFim)
+        const res = await fetch(FUNDO_IMOBILIARIO_SIMULACAO_INVESTIMENTO_URL + '/simula-investivemento/' + periodoInicio + '/' + periodoFim)
         const rs = await res.json()
         setResultado(rs)
         setOpenResult(true)
@@ -149,7 +149,7 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
     }
 
     function goAddSimulacaoInvestimentoDetail(){
-        router.push('/acoes/simular-investimento-varias-acoes/add-simular-investimento-detail')
+        router.push('/fundo-imobiliario/simular-investimento-varios-fundos/add-simular-investimento-detail')
     }
 
     const handleCloseDialog = () => {
@@ -159,11 +159,11 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
     const handleDelete = async () => {        
         setOpenDialog(false);
 
-        const response = await fetch(ACAO_SIMULACAO_INVESTIMENTO_URL  + '/delete-simulacao-detail-investimento/'+ siglaSelecionada, {
+        const response = await fetch(FUNDO_IMOBILIARIO_SIMULACAO_INVESTIMENTO_URL  + '/delete-simulacao-detail-investimento/'+ siglaSelecionada, {
             method: 'DELETE'           
         })
         const data = await response.json()        
-        router.push('/acoes/simular-investimento-varias-acoes/') 
+        router.push('/fundo-imobiliario/simular-investimento-varios-fundos/') 
     };    
 
     function handleDetail(sigla) {    
@@ -174,7 +174,7 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
 
     function handleEdit(row) {    
         router.push({
-            pathname: '/acoes/simular-investimento-varias-acoes/edit-simular-investimento-detail',
+            pathname: '/fundo-imobiliario/simular-investimento-varios-fundos/edit-simular-investimento-detail',
             query: { object: JSON.stringify(row) },
         })
     }
@@ -188,7 +188,7 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
 
     return (
         <Layout title="Quantitative System">
-            <h1>Simulação Investimento Várias Ações</h1>
+            <h1>Simulação Investimento Vários Fundos Imobiliarios</h1>
 
             <br></br> <br></br> <br></br>
 
@@ -423,11 +423,11 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
     );
 }
 
-export default SimularInvestimentoVariasAcoes;
+export default SimularInvestimentoVariosFundosImobiliarios;
 
 
 export async function getStaticProps(context) {
-    const res = await fetch(ACAO_SIMULACAO_INVESTIMENTO_URL )
+    const res = await fetch(FUNDO_IMOBILIARIO_SIMULACAO_INVESTIMENTO_URL )
     const simulacao = await res.json()
     return {
         props: {

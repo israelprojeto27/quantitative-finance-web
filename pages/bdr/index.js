@@ -143,10 +143,10 @@ function Bdr({ list }) {
         }        
         else if ( select === 'simularValorRendimentoCotas'){            
             router.push('/bdr/simular-valor-rendimento-cotas')
-        }   
-        else if ( select === 'simularInvestimentoVariasAcoes'){            
-            router.push('/bdr/simular-valor-rendimento-cotas')
         }           
+        else if ( select === 'simularInvestimentoVariosBdrs'){            
+            router.push('/bdr/simular-investimento-varios-bdrs')
+        } 
     };
 
     return (
@@ -254,7 +254,8 @@ function Bdr({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
-                            <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariasAcoes')}>Simular Investimento Várias Ações</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariosBdrs')}>Simular Investimento Vários BDRs</MenuItem>
+
                         </Menu>
                     </td>
                 </tr>
