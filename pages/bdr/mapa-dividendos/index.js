@@ -138,6 +138,7 @@ function MapaDividendosAcoes() {
                                             <Tab label="Somatório Dividendos em R$" onClick={() => handleSelectTab('1')} className={value === '1' ? (classes.tabselect) : ("")} />
                                             <Tab label="Quantidade Ocorrências Dividendos" onClick={() => handleSelectTab('2')} className={value === '2' ? (classes.tabselect) : ("")} />
                                             <Tab label="Lista Dividendos Periodos" onClick={() => handleSelectTab('3')} className={value === '3' ? (classes.tabselect) : ("")} />
+                                            <Tab label="ROI Dividendo Cotação" onClick={() => handleSelectTab('4')} className={value === '4' ? (classes.tabselect) : ("")} />
                                         </TabList>
                                         <TabPanel value="1">
                                             {result.listSum.map((sum) => {
@@ -222,6 +223,31 @@ function MapaDividendosAcoes() {
 
                                                         <br></br> <br></br>
                                                     </div>
+                                                );
+                                            })}
+                                        </TabPanel>
+
+                                        <TabPanel value="4">
+                                            {result.listRoiInvestimento.map((count) => {
+                                                return (
+                                                    <Table size="small" aria-label="purchases">
+
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell>Sigla</TableCell>
+                                                                <TableCell>Coeficiente ROI</TableCell>
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            <TableRow key="1">
+                                                                <TableCell component="th" scope="row">
+                                                                    {count.sigla}
+                                                                </TableCell>
+                                                                <TableCell>{count.coeficienteRoiFmt}</TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                        <br></br><br></br>
+                                                    </Table>
                                                 );
                                             })}
                                         </TabPanel>

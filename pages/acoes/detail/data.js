@@ -22,7 +22,17 @@ export const columnsListIncrease = [
 
 export const columnsListDividendos = [
     { id: 1, label: 'Data', align: 'left', minWidth: 10, },
-    { id: 2, label: 'Valor Dividendo R$', align: 'left', minWidth: 10, },   
-    
+    { id: 2, label: 'Valor Dividendo R$', align: 'left', minWidth: 10, },       
 ];
+
+
+export const columnsListRoiDividendoCotacao = [
+    { id: 1, label: 'Periodo', align: 'left', minWidth: 10, },
+    { id: 2, label: 'Coeficiente Roi Dividendo', align: 'left', minWidth: 10, },
+    { id: 3, label: 'Valor Dividendo R$', align: 'left', minWidth: 10, },       
+    { id: 4, label: 'Data Dividendo', align: 'left', minWidth: 10, },       
+    { id: 4, label: 'Valor Cotação Mensal R$', align: 'left', minWidth: 10, },       
+    { id: 4, label: 'Data Cotação', align: 'left', minWidth: 10, },       
+];
+
 

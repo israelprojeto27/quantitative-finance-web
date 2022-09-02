@@ -144,6 +144,9 @@ function Acoes({ list }) {
         }               
         else if ( select === 'simularInvestimentoVariasAcoes'){            
             router.push('/acoes/simular-investimento-varias-acoes')
+        }     
+        else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){            
+            router.push('/acoes/calcula-porcentagem-crescimento-cotacoes')
         }               
     };
 
@@ -254,7 +257,8 @@ function Acoes({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
-                            <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariasAcoes')}>Simular Investimento Várias Ações</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariasAcoes')}>Simular Investimento Várias Ações</MenuItem>                            
+                            <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Ações</MenuItem>
                         </Menu>
                     </td>
                 </tr>

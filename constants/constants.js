@@ -27,5 +27,7 @@ export const BDR_COTACAO_URL = BASE_URL + '/cotacao-bdr';
 
 export const BDR_SIMULACAO_INVESTIMENTO_URL = BASE_URL + '/simula-investimento-bdr';
 
+export const PARAMETRO_URL = BASE_URL + '/parametro';
+
 
 

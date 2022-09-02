@@ -147,6 +147,9 @@ function FundoImobiliario({ list }) {
         else if ( select === 'simularInvestimentoVariosFundos'){            
             router.push('/fundo-imobiliario/simular-investimento-varios-fundos')
         } 
+        else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){            
+            router.push('/fundo-imobiliario/calcula-porcentagem-crescimento-cotacoes')
+        } 
          
     };
     
@@ -258,7 +261,7 @@ function FundoImobiliario({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariosFundos')}>Simular Investimento Vários Fundos Imobiarios</MenuItem>                           
-
+                            <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Fundos Imobiliarios</MenuItem>
                         </Menu>
                     </td>
                 </tr>

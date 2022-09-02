@@ -22,6 +22,7 @@ import TabListIncreasePercentSemanal from './TabListIncreasePercentSemanal';
 import TabListDividendos from './TabListDividendos';
 import TabValorRendimentoDividendos from './TabValorRendimentoDividendos';
 import TabValorRendimentoDividendosQuantCotas from './TabValorRendimentoDividendosQuantCotas';
+import TabListRoiDividendoCotacao from './TabListRoiDividendoCotacao';
 
 
 const useStyles = makeStyles({
@@ -64,8 +65,9 @@ function index({detalheBdr}) {
                             <Tab label="% Crescimento (Semanal)" onClick={() => handleChange('5')} className={value === '5' ? (classes.tabselect) : ("")} />
                             <Tab label="% Crescimento (Mensal)" onClick={() => handleChange('6')} className={value === '6' ? (classes.tabselect) : ("")} />
                             <Tab label="Dividendos" onClick={() => handleChange('7')} className={value === '7' ? (classes.tabselect) : ("")} />
-                            <Tab label="Simulação Rendimento Dividendos " onClick={() => handleChange('8')} className={value === '8' ? (classes.tabselect) : ("")} />
-                            <Tab label="Simulação Rendimento Dividendos por Cotas" onClick={() => handleChange('9')} className={value === '9' ? (classes.tabselect) : ("")} />
+                            <Tab label="Roi Dividendo Cotação " onClick={() => handleChange('8')} className={value === '8' ? (classes.tabselect) : ("")} />
+                            <Tab label="Simulação Rendimento Dividendos " onClick={() => handleChange('9')} className={value === '9' ? (classes.tabselect) : ("")} />
+                            <Tab label="Simulação Rendimento Dividendos por Cotas" onClick={() => handleChange('10')} className={value === '10' ? (classes.tabselect) : ("")} />
                         </TabList>
                     </Box>
                     <TabPanel value="1">
@@ -92,9 +94,12 @@ function index({detalheBdr}) {
                         <TabListDividendos list={detalheBdr.listDividendos}  />                    
                     </TabPanel>
                     <TabPanel value="8">
-                        <TabValorRendimentoDividendos ativo={detalheBdr.sigla} />                    
+                        <TabListRoiDividendoCotacao list={detalheBdr.listRoiDividendoCotacao}  />                    
                     </TabPanel>
                     <TabPanel value="9">
+                        <TabValorRendimentoDividendos ativo={detalheBdr.sigla} />                    
+                    </TabPanel>
+                    <TabPanel value="10">
                         <TabValorRendimentoDividendosQuantCotas  ativo={detalheBdr.sigla}/>                    
                     </TabPanel>
                 </TabContext>

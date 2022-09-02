@@ -51,7 +51,9 @@ function NavBar() {
     { id: 2, label: 'Ações', path: '/acoes', icon: Whatshot },
     { id: 3, label: 'Fundo Imobiliário', path: '/fundo-imobiliario', icon: Whatshot },
     { id: 4, label: 'BDR', path: '/bdr', icon: Whatshot },    
-    { id: 9, label: 'Extrato', path: '/extrato', icon: Whatshot },
+    { id: 5, label: 'Extrato', path: '/extrato', icon: Whatshot },
+    { id: 6, label: 'Parametros', path: '/parametro', icon: Whatshot },
+    { id: 7, label: 'Uploads', path: '/uploads', icon: Whatshot },
   ];
 
   const isSelected = (item) => router.pathname === item.path;

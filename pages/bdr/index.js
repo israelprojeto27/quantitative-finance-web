@@ -147,6 +147,9 @@ function Bdr({ list }) {
         else if ( select === 'simularInvestimentoVariosBdrs'){            
             router.push('/bdr/simular-investimento-varios-bdrs')
         } 
+        else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){            
+            router.push('/bdr/calcula-porcentagem-crescimento-cotacoes')
+        } 
     };
 
     return (
@@ -255,7 +258,7 @@ function Bdr({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariosBdrs')}>Simular Investimento Vários BDRs</MenuItem>
-
+                            <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento BDRs</MenuItem>
                         </Menu>
                     </td>
                 </tr>
