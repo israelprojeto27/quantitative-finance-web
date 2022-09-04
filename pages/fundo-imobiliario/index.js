@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import { Button } from '@mui/material'
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -28,6 +29,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
 import { FUNDO_IMOBILIARIO_URL } from '../../constants/constants';
+import { FUNDO_IMOBILIARIO_ANALISE_URL } from '../../constants/constants';
 
 
 const useStyles = makeStyles({
@@ -150,8 +152,26 @@ function FundoImobiliario({ list }) {
         else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){            
             router.push('/fundo-imobiliario/calcula-porcentagem-crescimento-cotacoes')
         } 
-         
+        else if ( select === 'analiseFundos'){            
+            router.push('/fundo-imobiliario/analises')
+        }          
     };
+
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/add-fundo/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de analises: ' + row.sigla) 
+    }
     
 
     return (
@@ -262,6 +282,7 @@ function FundoImobiliario({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariosFundos')}>Simular Investimento Vários Fundos Imobiarios</MenuItem>                           
                             <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Fundos Imobiliarios</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'analiseFundos')}>Análises Fundos Imobiliarios</MenuItem>    
                         </Menu>
                     </td>
                 </tr>
@@ -293,7 +314,8 @@ function FundoImobiliario({ list }) {
                                             {row.dataUltimoDividendo}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                        
+                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>    
+                                                <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>                                      
                                         </TableCell>
                                     </TableRow>
                                 );

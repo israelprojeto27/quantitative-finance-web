@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -29,6 +30,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
 import { ACAO_URL } from '../../constants/constants';
+import { ACAO_ANALISE_URL } from '../../constants/constants';
 
 const useStyles = makeStyles({
     paddingDialogRow: {
@@ -101,6 +103,22 @@ function Acoes({ list }) {
         }
     }
 
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(ACAO_ANALISE_URL + '/add-acao/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de analises: ' + row.sigla) 
+    }
+
     function handleChange(event, field) {
         if (field === 'searchPapel') {
             setSearchPapel(event.currentTarget.value);
@@ -147,7 +165,11 @@ function Acoes({ list }) {
         }     
         else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){            
             router.push('/acoes/calcula-porcentagem-crescimento-cotacoes')
-        }               
+        }  
+        else if ( select === 'analisesAcoes'){            
+            router.push('/acoes/analises')
+        }  
+                     
     };
 
 
@@ -259,6 +281,7 @@ function Acoes({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariasAcoes')}>Simular Investimento Várias Ações</MenuItem>                            
                             <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Ações</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'analisesAcoes')}>Análises Ações</MenuItem>
                         </Menu>
                     </td>
                 </tr>
@@ -293,6 +316,7 @@ function Acoes({ list }) {
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
                                             <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>
+                                            <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>
                                         </TableCell>
                                     </TableRow>
                                 );

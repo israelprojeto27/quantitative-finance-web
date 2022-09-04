@@ -16,6 +16,7 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -29,6 +30,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
 import { BDR_URL } from '../../constants/constants';
+import { BDR_ANALISE_URL } from '../../constants/constants';
 
 
 const useStyles = makeStyles({
@@ -150,7 +152,27 @@ function Bdr({ list }) {
         else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){            
             router.push('/bdr/calcula-porcentagem-crescimento-cotacoes')
         } 
+        else if ( select === 'analiseBdr'){            
+            router.push('/bdr/analises')
+        } 
     };
+
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(BDR_ANALISE_URL + '/add-bdr/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('BDR adicionado na lista de analises: ' + row.sigla) 
+    }
+
 
     return (
         <Layout title="Quantitative System">
@@ -259,6 +281,7 @@ function Bdr({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariosBdrs')}>Simular Investimento Vários BDRs</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento BDRs</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'analiseBdr')}>Análises BDRs</MenuItem>                            
                         </Menu>
                     </td>
                 </tr>
@@ -290,7 +313,8 @@ function Bdr({ list }) {
                                             {row.dataUltimoDividendo}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                        
+                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button> 
+                                                <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>                                       
                                         </TableCell>
                                     </TableRow>
                                 );
