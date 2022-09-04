@@ -92,29 +92,133 @@ function Uploads() {
      };
 
     const handleSubmit = async () => {    
+
        if ( tipoUpload === 'acoesCompleto'){
+            
+            setMensagemExecucao('Em execução ...')
+            const response = await fetch(ACAO_URL + '/uploadFull' , {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                        
+                        document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
+                    }),
+                headers: {
+                    'Content-type': 'multipart/form-data'
+                }
+            })
+            setMensagemExecucao('Execução finalizada !!!')
 
        }
        else  if ( tipoUpload === 'acoesParcial'){
 
+            setMensagemExecucao('Em execução ...')
+            const response = await fetch(ACAO_URL + '/uploadPartial' , {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                        
+                        document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
+                    }),
+                headers: {
+                    'Content-type': 'multipart/form-data'
+                }
+            })
+            setMensagemExecucao('Execução finalizada !!!')
+
        }
        else  if ( tipoUpload === 'bdrCompleto'){
+
+            setMensagemExecucao('Em execução ...')
+            const response = await fetch(BDR_URL + '/uploadFull' , {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                        
+                        document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
+                    }),
+                headers: {
+                    'Content-type': 'multipart/form-data'
+                }
+            })
+            setMensagemExecucao('Execução finalizada !!!')
 
        }
        else  if ( tipoUpload === 'bdrParcial'){
 
+            setMensagemExecucao('Em execução ...')
+            const response = await fetch(BDR_URL + '/uploadPartial' , {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                        
+                        document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
+                    }),
+                headers: {
+                    'Content-type': 'multipart/form-data'
+                }
+            })
+            setMensagemExecucao('Execução finalizada !!!')
+
        }
        else  if ( tipoUpload === 'fundoCompleto'){
 
+            setMensagemExecucao('Em execução ...')
+            const response = await fetch(FUNDO_IMOBILIARIO_URL + '/uploadFull' , {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                        
+                        document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
+                    }),
+                headers: {
+                    'Content-type': 'multipart/form-data'
+                }
+            })
+            setMensagemExecucao('Execução finalizada !!!')
+
        }
        else  if ( tipoUpload === 'fundoParcial'){
+       
+            setMensagemExecucao('Em execução ...')
+                const response = await fetch(FUNDO_IMOBILIARIO_URL + '/uploadPartial' , {
+                    method: 'POST',
+                    body: JSON.stringify(
+                        {                        
+                            document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
+                        }),
+                    headers: {
+                        'Content-type': 'multipart/form-data'
+                    }
+                })
+            setMensagemExecucao('Execução finalizada !!!')
 
        }
        else  if ( tipoUpload === 'dividendoFundoCompleto'){
+        
+            setMensagemExecucao('Em execução ...')
+                const response = await fetch(FUNDO_IMOBILIARIO_URL + '/uploadDividendos' , {
+                    method: 'POST',
+                    body: JSON.stringify(
+                        {                        
+                            document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
+                        }),
+                    headers: {
+                        'Content-type': 'multipart/form-data'
+                    }
+                })
+            setMensagemExecucao('Execução finalizada !!!')
 
        }
        else  if ( tipoUpload === 'dividendoFundoParcial'){
 
+            setMensagemExecucao('Em execução ...')
+            const response = await fetch(FUNDO_IMOBILIARIO_URL + '/uploadDividendosPartial' , {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                        
+                        document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
+                    }),
+                headers: {
+                    'Content-type': 'multipart/form-data'
+                }
+            })
+            setMensagemExecucao('Execução finalizada !!!')
        }
  
     }
