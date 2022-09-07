@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -31,6 +32,8 @@ import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
 import { ACAO_URL } from '../../constants/constants';
 import { ACAO_ANALISE_URL } from '../../constants/constants';
+import { ATIVOS_URL } from '../../constants/constants';
+
 
 const useStyles = makeStyles({
     paddingDialogRow: {
@@ -100,7 +103,24 @@ function Acoes({ list }) {
             const res = await fetch(ACAO_URL + '/info-gerais')
             const list = await res.json()
             setRowsList(list)
-        }
+        }        
+    }
+
+    
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_URL + '/add-analise-ativo/acao/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
     }
 
     const handleAddAnalise = async (row) => {
@@ -317,6 +337,8 @@ function Acoes({ list }) {
                                         <TableCell key={row.id} align={row.align}>
                                             <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>
                                             <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>
+                                            <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
+                                            
                                         </TableCell>
                                     </TableRow>
                                 );

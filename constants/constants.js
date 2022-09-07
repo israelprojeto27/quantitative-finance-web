@@ -35,5 +35,7 @@ export const BDR_ANALISE_URL = BASE_URL + '/analise-bdr';
 
 export const PARAMETRO_URL = BASE_URL + '/parametro';
 
+export const ATIVOS_URL = BASE_URL + '/ativos';
+
 
 

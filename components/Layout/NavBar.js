@@ -54,6 +54,7 @@ function NavBar() {
     { id: 5, label: 'Extrato', path: '/extrato', icon: Whatshot },
     { id: 6, label: 'Parametros', path: '/parametro', icon: Whatshot },
     { id: 7, label: 'Uploads', path: '/uploads', icon: Whatshot },
+    { id: 8, label: 'Ativos', path: '/ativos', icon: Whatshot },
   ];
 
   const isSelected = (item) => router.pathname === item.path;

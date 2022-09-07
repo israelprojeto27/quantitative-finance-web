@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -31,6 +32,7 @@ import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
 import { BDR_URL } from '../../constants/constants';
 import { BDR_ANALISE_URL } from '../../constants/constants';
+import { ATIVOS_URL } from '../../constants/constants';
 
 
 const useStyles = makeStyles({
@@ -156,6 +158,22 @@ function Bdr({ list }) {
             router.push('/bdr/analises')
         } 
     };
+
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_URL + '/add-analise-ativo/bdr/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('BDR adicionado na lista de Ativos sendo analisados: ' + row.sigla) 
+    }
 
     const handleAddAnalise = async (row) => {
 
@@ -315,6 +333,7 @@ function Bdr({ list }) {
                                         <TableCell key={row.id} align={row.align}>
                                                 <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button> 
                                                 <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>                                       
+                                                <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
                                         </TableCell>
                                     </TableRow>
                                 );
