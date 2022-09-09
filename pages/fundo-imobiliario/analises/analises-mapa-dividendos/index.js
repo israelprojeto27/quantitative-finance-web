@@ -1,4 +1,4 @@
-import Layout from "../../../components/Layout";
+import Layout from "../../../../components/Layout"
 
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material'
@@ -22,7 +22,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-import { ACAO_URL } from '../../../constants/constants';
+import { FUNDO_IMOBILIARIO_ANALISE_URL } from '../../../../constants/constants'
 
 
 const useStyles = makeStyles({
@@ -42,7 +42,7 @@ const useStyles = makeStyles({
     },
 });
 
-function MapaDividendosAcoes() {
+function MapaDividendosAnaliseFundosImobiliarios() {
     const classes = useStyles();
     const router = useRouter();
 
@@ -65,7 +65,7 @@ function MapaDividendosAcoes() {
     }
 
     const handleSubmit = async () => {
-        const res = await fetch(ACAO_URL + '/mapa-dividendos/' + periodoInicio + '/' + periodoFim)
+        const res = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/mapa-dividendos/' + periodoInicio + '/' + periodoFim)
         const resultado = await res.json()
         setResult(resultado);
         setOpen(true)
@@ -73,7 +73,7 @@ function MapaDividendosAcoes() {
     }
 
     function goBack() {
-        router.push('/acoes');
+        router.push('/fundo-imobiliario/analises');
     }
 
     function handleSelectTab (newValue) {
@@ -82,7 +82,7 @@ function MapaDividendosAcoes() {
 
     return (
         <Layout title="Quantitative System">
-            <h1>Mapa Dividendos Ações</h1>
+            <h1>Análise Fundos Imobiliarios - Mapa Dividendos</h1>
 
             <br></br> <br></br>
 
@@ -264,4 +264,4 @@ function MapaDividendosAcoes() {
     );
 }
 
-export default MapaDividendosAcoes;
+export default MapaDividendosAnaliseFundosImobiliarios;
