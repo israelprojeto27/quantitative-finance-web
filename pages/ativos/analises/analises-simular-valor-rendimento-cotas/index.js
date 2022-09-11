@@ -21,7 +21,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
- 
+import Menu from '@mui/material/Menu';
+
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+
 import { ATIVOS_ANALISE_URL } from '../../../../constants/constants';
 
 import  HeadListResult  from './components/HeadListResult'
@@ -64,21 +69,20 @@ const useStyles = makeStyles({
 });
 
 
-function AnaliseAtivosSimularValorInvest() {
+function AnaliseAtivosSimularValorRendimentoCotas() {
 
     const classes = useStyles();
     const router = useRouter();
 
-    const [valorRendimento, setValorRendimento] = useState('');
+    const [valorInvestimento, setValorInvestimento] = useState('');
     const [rowsList, setRowsList] = useState([]);
  
-    const [searchPapel, setSearchPapel] = useState('');
     const [selectOrdenacao, setSelectOrdenacao] = useState('-');
     const [selectTipoOrdenacao, setSelectTipoOrdenacao] = useState('crescente');
 
     function handleChange(event, field) {
-        if (field === 'valorRendimento') {
-            setValorRendimento(event.currentTarget.value);
+        if (field === 'valorInvestimento') {
+            setValorInvestimento(event.currentTarget.value);
         } 
         else if (field === 'searchPapel') {
             setSearchPapel(event.currentTarget.value);
@@ -91,14 +95,14 @@ function AnaliseAtivosSimularValorInvest() {
 
     const handleSubmit = async () => {
         setRowsList([])
-        const res = await fetch(ATIVOS_ANALISE_URL + '/simula-valor-investido/' + valorRendimento  + '/')        
+        const res = await fetch(ATIVOS_ANALISE_URL + '/simula-rendimento-por-cotas/' + valorInvestimento  + '/')        
         const list = await res.json()        
         setRowsList(list)
     }
 
     const handleFilter = async () => {
         setRowsList([]);
-        const res = await fetch(ATIVOS_ANALISE_URL + '/filter-simula-valor-investido/' + valorRendimento  + '/?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
+        const res = await fetch(ATIVOS_ANALISE_URL + '/filter-simula-rendimento-por-cotas/' + valorInvestimento  + '/?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
         const list = await res.json()
         setRowsList(list)
     }
@@ -113,10 +117,9 @@ function AnaliseAtivosSimularValorInvest() {
         }
     };
 
-  
     return (
         <Layout title="Quantitative System">
-            <h1>Analises Ativos - Simulação Valor Investimento - Rendimento Mensal Dividendos</h1>
+            <h1>Analise Ativos - Simulação Valor Rendimento por Quantidade de Cotas e Dividendos</h1>
 
             <br></br> <br></br>
 
@@ -132,9 +135,9 @@ function AnaliseAtivosSimularValorInvest() {
                 <div className={classes.text}>
                     <TextField
                         id="outlined-required"
-                        label="Valor Rendimento Mensal R$"
-                        value={valorRendimento}
-                        onChange={(e) => handleChange(e, 'valorRendimento')}
+                        label="Valor Investimento R$"
+                        value={valorInvestimento}
+                        onChange={(e) => handleChange(e, 'valorInvestimento')}
                     />
                 </div> 
 
@@ -147,8 +150,7 @@ function AnaliseAtivosSimularValorInvest() {
             <br></br>       <br></br>
 
             <table className={classes.table}>
-                <tr>
-                    
+                <tr>                 
 
                     <td>
                         <Box className={classes.boxSelect} >
@@ -162,7 +164,7 @@ function AnaliseAtivosSimularValorInvest() {
                                     onChange={(e) => handleChangeSelect(e, 'ordenacao')}
                                 >
                                     <MenuItem value={'-'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Selecione uma opção</fontSize></MenuItem>
-                                    <MenuItem value={'valorInvestimento'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Investimento R$</fontSize></MenuItem>
+                                    <MenuItem value={'valorRendimento'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Rendimento R$</fontSize></MenuItem>                                    
                                     <MenuItem value={'valorUltCotacao'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Última Cotação R$</fontSize></MenuItem>
                                     <MenuItem value={'dataUltCotacao'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Última Cotação</fontSize></MenuItem>
                                     <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
@@ -201,8 +203,9 @@ function AnaliseAtivosSimularValorInvest() {
                         >
                             Filtrar
                         </Button>
-                    </td>        
-                    <td>
+                    </td>         
+
+                        <td>
                         <Button
                             id="basic-button"
                             variant="contained"
@@ -212,7 +215,7 @@ function AnaliseAtivosSimularValorInvest() {
                         >
                             Voltar
                         </Button>
-                    </td>            
+                    </td>           
                 </tr>
             </table>
 
@@ -229,7 +232,10 @@ function AnaliseAtivosSimularValorInvest() {
                                             {row.sigla}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            {row.valorInvestimentoFmt}
+                                            {row.valorRendimentoFmt}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.quantidadeCotasFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
                                             {row.valorUltimaCotacaoFmt}
@@ -255,9 +261,9 @@ function AnaliseAtivosSimularValorInvest() {
                 </TableContainer>
             </Paper>
 
-                            <br></br> <br></br> <br></br>
+
         </Layout>
     );
 }
 
-export default AnaliseAtivosSimularValorInvest;
+export default AnaliseAtivosSimularValorRendimentoCotas;

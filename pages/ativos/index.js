@@ -124,7 +124,7 @@ function Ativos({ list }) {
             router.push('/ativos/simula-valor-investimentos')
         }  
         else if ( select === 'calculaPorcentagemAtivos'){            
-            router.push('/ativos/calcula-porcentagem-ativos')
+            router.push('/ativos/calcula-porcentagem-crescimento-cotacoes')
         }          
     }    
 

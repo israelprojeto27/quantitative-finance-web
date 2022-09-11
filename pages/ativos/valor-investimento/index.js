@@ -1,4 +1,4 @@
-import Layout from "../../../../components/Layout";
+import Layout from "../../../components/Layout";
 
 
 import TextField from '@mui/material/TextField';
@@ -22,7 +22,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
  
-import { ATIVOS_ANALISE_URL } from '../../../../constants/constants';
+import { ATIVOS_URL } from '../../../constants/constants';
 
 import  HeadListResult  from './components/HeadListResult'
 
@@ -64,7 +64,7 @@ const useStyles = makeStyles({
 });
 
 
-function AnaliseAtivosSimularValorInvest() {
+function AtivosSimularValorInvest() {
 
     const classes = useStyles();
     const router = useRouter();
@@ -91,14 +91,14 @@ function AnaliseAtivosSimularValorInvest() {
 
     const handleSubmit = async () => {
         setRowsList([])
-        const res = await fetch(ATIVOS_ANALISE_URL + '/simula-valor-investido/' + valorRendimento  + '/')        
+        const res = await fetch(ATIVOS_URL + '/simula-valor-investido/' + valorRendimento  + '/')        
         const list = await res.json()        
         setRowsList(list)
     }
 
     const handleFilter = async () => {
         setRowsList([]);
-        const res = await fetch(ATIVOS_ANALISE_URL + '/filter-simula-valor-investido/' + valorRendimento  + '/?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
+        const res = await fetch(ATIVOS_URL + '/filter-simula-valor-investido/' + valorRendimento  + '/?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
         const list = await res.json()
         setRowsList(list)
     }
@@ -116,7 +116,7 @@ function AnaliseAtivosSimularValorInvest() {
   
     return (
         <Layout title="Quantitative System">
-            <h1>Analises Ativos - Simulação Valor Investimento - Rendimento Mensal Dividendos</h1>
+            <h1>Ativos - Simulação Valor Investimento - Rendimento Mensal Dividendos</h1>
 
             <br></br> <br></br>
 
@@ -260,4 +260,4 @@ function AnaliseAtivosSimularValorInvest() {
     );
 }
 
-export default AnaliseAtivosSimularValorInvest;
+export default AtivosSimularValorInvest;

@@ -31,7 +31,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Button } from '@mui/material'
 
-import { ATIVOS_URL } from '../../../constants/constants'
+import { ATIVOS_ANALISE_URL } from '../../../constants/constants'
 
 export const columnsList = [
     { id: 1, label: 'Tipo Ativo', align: 'left', minWidth: 10, },
@@ -123,7 +123,7 @@ function AnaliseAtivos({ list }) {
 
     const handleFilter = async () => {        
         setRowsList([]);        
-        const res = await fetch(ATIVOS_URL + '/filter-ativos-analise?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)        
+        const res = await fetch(ATIVOS_ANALISE_URL + '/filter-ativos-analise?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)        
         const list = await res.json()        
         setRowsList(list)        
     }
@@ -139,17 +139,41 @@ function AnaliseAtivos({ list }) {
     };
 
     const handleDelete = async () => {  
-        const response = await fetch(ATIVOS_URL  + '/delete-ativo-analise/' + tipoAtivoSelecionado + '/' + siglaSelecionada, {
+        const response = await fetch(ATIVOS_ANALISE_URL  + '/delete-ativo-analise/' + tipoAtivoSelecionado + '/' + siglaSelecionada, {
             method: 'DELETE'           
         })
         const data = await response.json()  
         
-        const res = await fetch(ATIVOS_URL + '/list-ativos-analise' )
+        const res = await fetch(ATIVOS_ANALISE_URL + '/list-ativos-analise' )
         const list = await res.json()
         setRowsList(list)
 
         setOpenDialog(false);
     };  
+
+    function handleSelect(event, select) {
+        if ( select === 'mapaDividendos'){
+            router.push('/ativos/analises/analises-mapa-dividendos')
+        }         
+        else if ( select === 'simularValorInvest'){
+            router.push('/ativos/analises/analises-valor-investimento')
+        } 
+        else if ( select === 'simularValorRendimentoCotas'){
+            router.push('/ativos/analises/analises-simular-valor-rendimento-cotas')
+        } 
+        else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){
+            router.push('/ativos/analises/analises-calcula-porcentagem-crescimento-cotacoes')
+        }         
+    }  
+
+    function handleClickMenu(event) {
+        setAnchorEl(event.currentTarget);
+        setOpen(true)
+    }
+
+    function handleCloseMenu() {
+        setOpen(false);
+    }
     
 
     return (
@@ -213,6 +237,35 @@ function AnaliseAtivos({ list }) {
                             Filtrar
                         </Button>
 
+                    </td>
+
+                    <td className={classes.cardTd}>
+                        <Button
+                            id="basic-button"
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            variant="contained"
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={(e) => handleClickMenu(e)}
+                            className={classes.text}
+                        >
+                            Funcionalidades
+                        </Button>
+
+                        <Menu
+                            id="basic-menu"
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleCloseMenu}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>                                               
+                            <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Ações</MenuItem>                            
+                        </Menu>
                     </td>
 
                 </tr>    
@@ -325,7 +378,7 @@ function AnaliseAtivos({ list }) {
 export default AnaliseAtivos;
  
 export async function getStaticProps(context) {
-    const res = await fetch(ATIVOS_URL + '/list-ativos-analise')
+    const res = await fetch(ATIVOS_ANALISE_URL + '/list-ativos-analise')
     const list = await res.json()
     return {
         props: {

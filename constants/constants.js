@@ -37,5 +37,9 @@ export const PARAMETRO_URL = BASE_URL + '/parametro';
 
 export const ATIVOS_URL = BASE_URL + '/ativos';
 
+export const ATIVOS_ANALISE_URL = BASE_URL + '/ativos-analise';
+
+
+
 
 
