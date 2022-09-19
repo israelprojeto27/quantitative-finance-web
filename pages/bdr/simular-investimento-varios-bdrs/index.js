@@ -29,8 +29,11 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
-import { BDR_SIMULACAO_INVESTIMENTO_URL } from '../../../constants/constants'
+
+import { BDR_SIMULACAO_INVESTIMENTO_URL, BDR_ANALISE_URL, ATIVOS_ANALISE_URL  } from '../../../constants/constants'
 
 const useStyles = makeStyles({
     paddingDialogRow: {
@@ -179,12 +182,41 @@ function SimularInvestimentoVariosBdrs({ simulacao }) {
         })
     }
 
-    
-
-
     useEffect(() => { 
         setDetail(simulacao)
     }, [router.query]);
+
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/bdr/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('BDR adicionado na lista de Ativos sendo analisados: ' + row.sigla) 
+    }
+
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(BDR_ANALISE_URL + '/add-bdr/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('BDR adicionado na lista de analises: ' + row.sigla) 
+    }
 
     return (
         <Layout title="Quantitative System">
@@ -271,6 +303,8 @@ function SimularInvestimentoVariosBdrs({ simulacao }) {
                                         <TableCell key={row.id} align={row.align}>
                                             <Button variant='success' onClick={() => handleDetail(row.sigla)}> <ZoomInOutlinedIcon /> </Button>      
                                             <Button variant='success' onClick={() => handleEdit(row)}> <EditOutlinedIcon /> </Button>    
+                                            <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>                                       
+                                            <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
                                         </TableCell>    
                                     </TableRow>
                                 );

@@ -29,8 +29,10 @@ import FormHelperText from '@mui/material/FormHelperText';
 
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
-import { ACAO_SIMULACAO_INVESTIMENTO_URL } from '../../../constants/constants'
+import { ACAO_SIMULACAO_INVESTIMENTO_URL, ACAO_ANALISE_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants'
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -197,6 +199,39 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
         setDetail(simulacao)
     }, [router.query]);
 
+
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/acao/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
+    }
+
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(ACAO_ANALISE_URL + '/add-acao/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de analises: ' + row.sigla) 
+    }
+
     return (
         <Layout title="Quantitative System">
             <h1>Simulação Investimento Várias Ações</h1>
@@ -292,6 +327,8 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
                                             <Button variant='success' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>      
                                             <Button variant='success' onClick={() => handleDelete(row.sigla)}> <DeleteIcon /> </Button>      
                                             <Button variant='success' onClick={() => handleEdit(row)}> <EditOutlinedIcon /> </Button>    
+                                            <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>
+                                            <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
                                         </TableCell>    
                                     </TableRow>
                                 );

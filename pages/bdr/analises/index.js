@@ -10,6 +10,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 
 import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
@@ -28,13 +29,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Menu from '@mui/material/Menu';
-import TextField from '@mui/material/TextField';
-
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 import { BDR_ANALISE_URL } from '../../../constants/constants';
 
@@ -99,6 +93,8 @@ function AnalisesBdr({ list }) {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
+
+    const [openDialogDelete, setOpenDialogDelete] = useState(false);
 
     useEffect(() => {
         setRowsList(list)
@@ -167,6 +163,33 @@ function AnalisesBdr({ list }) {
     function handleCloseMenu() {
         setOpen(false);
     }
+
+    function handleDetail(row) {       
+        router.push({
+            pathname:  '/bdr/detail',
+            query: { sigla: row.sigla },
+        }) 
+    }
+
+    function handleDeleteAll(){
+        setOpenDialogDelete(true);
+    }
+
+    const handleCloseDialogDeleteAll = () => { 
+        setOpenDialogDelete(false);
+    };
+
+    const handleConfirmDeleteAll = async () => {  
+        const response = await fetch(BDR_ANALISE_URL  + '/delete-all-analises', {
+            method: 'DELETE'           
+        })
+        const data = await response.json()  
+        
+        const res = await fetch(BDR_ANALISE_URL )
+        const list = await res.json()
+        setRowsList(list)
+        setOpenDialogDelete(false);
+    };  
 
     return (
         <Layout title="Quantitative System">
@@ -261,6 +284,19 @@ function AnalisesBdr({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Ações</MenuItem>                            
                         </Menu>
                     </td>
+
+                    <td>
+                        <Button
+                            id="basic-button"
+                            variant="contained"
+                            aria-haspopup="true"
+                            onClick={handleDeleteAll}
+                            className={classes.text}
+                        >
+                            Limpar Análises
+                        </Button>
+
+                    </td>
                 </tr>
             </table>
 
@@ -313,7 +349,8 @@ function AnalisesBdr({ list }) {
                                         </TableCell> 
 
 
-                                        <TableCell key={row.id} align={row.align}>                                            
+                                        <TableCell key={row.id} align={row.align}> 
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                            
                                             <Button variant='success' onClick={() => handleOpenDialog(row)}> <DeleteIcon /> </Button> 
                                         </TableCell>
                                     </TableRow>
@@ -362,6 +399,45 @@ function AnalisesBdr({ list }) {
 
             </Dialog>
 
+
+            <Dialog
+                open={openDialogDelete}
+                onClose={handleCloseDialogDeleteAll}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                maxWidth="700px"
+            >
+                <DialogTitle id="alert-dialog-title" >
+                    Confirmação de limpeza de análises
+                </DialogTitle>
+
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <div className={classes.paddingDialogRow}>
+                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                Você deseja realmente limpar todas as análises?
+                            </Typography>                            
+                        </div>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <DialogTitle id="alert-dialog-title" >
+                        <Button onClick={handleCloseDialogDeleteAll}>Fechar</Button>
+                        <Button onClick={handleConfirmDeleteAll}>Confirmar</Button>
+                    </DialogTitle>
+                </DialogActions>
+
+                
+                <br></br>        
+                {errorSubmit === true ? (
+                    <FormHelperText error={errorSubmit}>
+                       <fontSize className={classes.msgError}> {msgErrorSubmit} </fontSize> 
+                    </FormHelperText>
+                ) : ('') }
+
+            </Dialog>
+ 
+ 
         </Layout>
     );
 }
@@ -369,7 +445,7 @@ function AnalisesBdr({ list }) {
 export default AnalisesBdr;
 
 export async function getStaticProps(context) {
-    const res = await fetch(BDR_ANALISE_URL )
+    const res = await fetch(BDR_ANALISE_URL )    
     const list = await res.json()
     return {
         props: {

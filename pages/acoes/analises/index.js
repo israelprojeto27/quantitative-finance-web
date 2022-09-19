@@ -104,6 +104,8 @@ function AnalisesAcoes({ list }) {
     const [selectOrdenacao, setSelectOrdenacao] = useState('-');
     const [selectTipoOrdenacao, setSelectTipoOrdenacao] = useState('crescente');
 
+    const [openDialogDelete, setOpenDialogDelete] = useState(false);
+
     useEffect(() => {
         setRowsList(list)
     }, []);
@@ -129,6 +131,26 @@ function AnalisesAcoes({ list }) {
         setRowsList(list)
 
         setOpenDialog(false);
+    };  
+
+    function handleDeleteAll(){
+        setOpenDialogDelete(true);
+    }
+
+    const handleCloseDialogDeleteAll = () => { 
+        setOpenDialogDelete(false);
+    };
+
+    const handleConfirmDeleteAll = async () => {  
+        const response = await fetch(ACAO_ANALISE_URL  + '/delete-all-analises', {
+            method: 'DELETE'           
+        })
+        const data = await response.json()  
+        
+        const res = await fetch(ACAO_ANALISE_URL )
+        const list = await res.json()
+        setRowsList(list)
+        setOpenDialogDelete(false);
     };  
 
     const handleSearchPapel = async () => {
@@ -277,7 +299,6 @@ function AnalisesAcoes({ list }) {
                         >
                             Filtrar
                         </Button>
-
                     </td>
 
                     <td className={classes.cardTd}>
@@ -307,6 +328,19 @@ function AnalisesAcoes({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>                                               
                             <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Ações</MenuItem>                            
                         </Menu>
+                    </td>
+
+                    <td>
+                        <Button
+                            id="basic-button"
+                            variant="contained"
+                            aria-haspopup="true"
+                            onClick={handleDeleteAll}
+                            className={classes.text}
+                        >
+                            Limpar Análises
+                        </Button>
+
                     </td>
                 </tr>
             </table>
@@ -397,6 +431,43 @@ function AnalisesAcoes({ list }) {
                     <DialogTitle id="alert-dialog-title" >
                         <Button onClick={handleCloseDialog}>Fechar</Button>
                         <Button onClick={handleDelete}>Confirmar</Button>
+                    </DialogTitle>
+                </DialogActions>
+
+                
+                <br></br>        
+                {errorSubmit === true ? (
+                    <FormHelperText error={errorSubmit}>
+                       <fontSize className={classes.msgError}> {msgErrorSubmit} </fontSize> 
+                    </FormHelperText>
+                ) : ('') }
+
+            </Dialog>
+
+            <Dialog
+                open={openDialogDelete}
+                onClose={handleCloseDialogDeleteAll}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                maxWidth="700px"
+            >
+                <DialogTitle id="alert-dialog-title" >
+                    Confirmação de limpeza de análises
+                </DialogTitle>
+
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <div className={classes.paddingDialogRow}>
+                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                Você deseja realmente limpar todas as análises?
+                            </Typography>                            
+                        </div>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <DialogTitle id="alert-dialog-title" >
+                        <Button onClick={handleCloseDialogDeleteAll}>Fechar</Button>
+                        <Button onClick={handleConfirmDeleteAll}>Confirmar</Button>
                     </DialogTitle>
                 </DialogActions>
 

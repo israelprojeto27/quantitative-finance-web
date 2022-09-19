@@ -27,7 +27,11 @@ import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { BDR_URL } from '../../../constants/constants';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
+
+import { BDR_URL, BDR_ANALISE_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants';
 
 import  HeadListResult  from './components/HeadListResult'
 
@@ -123,6 +127,45 @@ function SimularValorRendimentoCotas() {
             setSelectTipoOrdenacao(event.target.value);
         }
     };
+
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/bdr/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('BDR adicionado na lista de Ativos sendo analisados: ' + row.sigla) 
+    }
+
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(BDR_ANALISE_URL + '/add-bdr/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('BDR adicionado na lista de analises: ' + row.sigla) 
+    }
+
+    function handleDetail(row) {       
+        router.push({
+            pathname:  '/bdr/detail',
+            query: { sigla: row.sigla },
+        }) 
+    }
 
     return (
         <Layout title="Quantitative System">
@@ -264,7 +307,9 @@ function SimularValorRendimentoCotas() {
                                             {row.dataUltimoDividendoFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            
+                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button> 
+                                                <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>                                       
+                                                <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
                                         </TableCell>
                                     </TableRow>
                                 );

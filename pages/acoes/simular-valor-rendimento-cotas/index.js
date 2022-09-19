@@ -23,11 +23,14 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Menu from '@mui/material/Menu';
 
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { ACAO_URL } from '../../../constants/constants';
+import { ACAO_URL, ATIVOS_ANALISE_URL, ACAO_ANALISE_URL} from '../../../constants/constants';
 
 import  HeadListResult  from './components/HeadListResult'
 
@@ -133,6 +136,38 @@ function SimularValorRendimentoCotas() {
 
     function goBack() {
         router.push('/acoes');
+    }
+
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/acao/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
+    }
+
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(ACAO_ANALISE_URL + '/add-acao/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de analises: ' + row.sigla) 
     }
 
     return (
@@ -288,6 +323,8 @@ function SimularValorRendimentoCotas() {
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
                                                 <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>   
+                                                <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>
+                                                <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
                                         </TableCell>
                                     </TableRow>
                                 );

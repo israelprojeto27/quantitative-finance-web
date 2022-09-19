@@ -4,6 +4,9 @@ import Layout from "../../../components/Layout";
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 import { makeStyles } from '@material-ui/styles';
 import { useState, useEffect } from 'react';
@@ -28,6 +31,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { FUNDO_IMOBILIARIO_URL } from '../../../constants/constants';
+import { FUNDO_IMOBILIARIO_ANALISE_URL } from '../../../constants/constants';
+import {  ATIVOS_ANALISE_URL } from '../../../constants/constants';
 
 import  HeadListResult  from './components/HeadListResult'
 
@@ -123,6 +128,45 @@ function SimularValorInvest() {
             setSelectTipoOrdenacao(event.target.value);
         }
     };
+
+    function handleDetail(row) {       
+        router.push({
+            pathname:  '/fundo-imobiliario/detail',
+            query: { sigla: row.sigla },
+        }) 
+    }
+
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/fundo imobiliario/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de Ativos sendo analisados: ' + row.sigla) 
+    }
+
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/add-fundo/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de analises: ' + row.sigla) 
+    }
 
     return (
         <Layout title="Quantitative System">
@@ -261,7 +305,9 @@ function SimularValorInvest() {
                                             {row.dataUltimoDividendoFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            
+                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>    
+                                                <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>      
+                                                <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>                                
                                         </TableCell>
                                     </TableRow>
                                 );

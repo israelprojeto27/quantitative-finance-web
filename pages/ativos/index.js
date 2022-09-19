@@ -22,8 +22,10 @@ import Menu from '@mui/material/Menu';
  
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import { Button } from '@mui/material'
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
-import { ATIVOS_URL } from '../../constants/constants'
+import { ATIVOS_URL, ATIVOS_ANALISE_URL, ACAO_ANALISE_URL, FUNDO_IMOBILIARIO_ANALISE_URL, BDR_ANALISE_URL } from '../../constants/constants'
 
 export const columnsList = [
     { id: 1, label: 'Tipo Ativo', align: 'left', minWidth: 10, },
@@ -138,7 +140,6 @@ function Ativos({ list }) {
     }
 
     function handleDetail(row) {
-
         if ( row.tipoAtivo === 'acao'){
             router.push({
                 pathname: '/acoes/detail',
@@ -156,8 +157,104 @@ function Ativos({ list }) {
                 pathname: '/bdr/detail',
                 query: { sigla: row.sigla },
             })
-        }   
-        
+        }           
+    }
+
+    const handleAddAtivoAnalise = async (row) => {
+
+
+        if ( row.tipoAtivo === 'acao'){
+            const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/acao/' + row.sigla, {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                
+                        
+                    }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            const data = await response.json()           
+            alert('Ação adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
+        }        
+        else if ( row.tipoAtivo === 'fundo imobiliario'){
+            const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/fundo imobiliario/' + row.sigla, {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                
+                        
+                    }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            const data = await response.json()           
+            alert('Fundo imobiliario adicionado na lista de Ativos sendo analisados: ' + row.sigla) 
+        }    
+        else if ( row.tipoAtivo === 'bdr'){
+            const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/bdr/' + row.sigla, {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                
+                        
+                    }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            const data = await response.json()           
+            alert('BDR adicionado na lista de Ativos sendo analisados: ' + row.sigla) 
+        } 
+       
+    }
+
+    const handleAddAnalise = async (row) => {
+
+        if ( row.tipoAtivo === 'acao'){
+            const response = await fetch(ACAO_ANALISE_URL + '/add-acao/' + row.sigla, {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                
+                        
+                    }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            const data = await response.json()           
+            alert('Ação adicionada na lista de analises: ' + row.sigla) 
+        }
+        else if ( row.tipoAtivo === 'fundo imobiliario'){
+            const response = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/add-fundo/' + row.sigla, {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                
+                        
+                    }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            const data = await response.json()           
+            alert('Fundo Imobiliario adicionado na lista de analises: ' + row.sigla)
+        }
+        else if ( row.tipoAtivo === 'bdr'){
+            const response = await fetch(BDR_ANALISE_URL + '/add-bdr/' + row.sigla, {
+                method: 'POST',
+                body: JSON.stringify(
+                    {                
+                        
+                    }),
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            const data = await response.json()           
+            alert('BDR adicionado na lista de analises: ' + row.sigla) 
+        }
+
+
+         
     }
 
     return (
@@ -306,6 +403,8 @@ function Ativos({ list }) {
 
                                         <TableCell key={row.id} align={row.align}>                                            
                                             <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>
+                                            <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>
+                                            <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
                                         </TableCell>
                                     </TableRow>
                                 );

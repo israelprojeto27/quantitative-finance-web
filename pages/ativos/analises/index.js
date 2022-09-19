@@ -11,6 +11,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -108,6 +109,8 @@ function AnaliseAtivos({ list }) {
     const [tipoAtivoSelecionado, setTipoAtivoSelecionado] = useState('');
     const [siglaSelecionada, setSiglaSelecionada] = useState('');
 
+    const [openDialogDelete, setOpenDialogDelete] = useState(false);
+
      useEffect(() => {
         setRowsList(list)
     }, []); 
@@ -174,7 +177,47 @@ function AnaliseAtivos({ list }) {
     function handleCloseMenu() {
         setOpen(false);
     }
+
+    function handleDeleteAll(){
+        setOpenDialogDelete(true);
+    }
+
+    const handleCloseDialogDeleteAll = () => { 
+        setOpenDialogDelete(false);
+    };
+
+    const handleConfirmDeleteAll = async () => {  
+        const response = await fetch(ATIVOS_ANALISE_URL  + '/delete-all-analises', {
+            method: 'DELETE'           
+        })
+        const data = await response.json()  
+        
+        const res = await fetch(ATIVOS_ANALISE_URL + '/list-ativos-analise')
+        const list = await res.json()
+        setRowsList(list)
+        setOpenDialogDelete(false);
+    };  
     
+    function handleDetail(row) {
+        if ( row.tipoAtivo === 'acao'){
+            router.push({
+                pathname: '/acoes/detail',
+                query: { sigla: row.sigla },
+            })
+        }        
+        else if ( row.tipoAtivo === 'fundo imobiliario'){
+            router.push({
+                pathname: '/fundo-imobiliario/detail',
+                query: { sigla: row.sigla },
+            })
+        }    
+        else if ( row.tipoAtivo === 'bdr'){
+            router.push({
+                pathname: '/bdr/detail',
+                query: { sigla: row.sigla },
+            })
+        }           
+    }
 
     return (
         <Layout title="Quantitative System">
@@ -268,6 +311,19 @@ function AnaliseAtivos({ list }) {
                         </Menu>
                     </td>
 
+                    <td>
+                        <Button
+                            id="basic-button"
+                            variant="contained"
+                            aria-haspopup="true"
+                            onClick={handleDeleteAll}
+                            className={classes.text}
+                        >
+                            Limpar Análises
+                        </Button>
+
+                    </td>
+
                 </tr>    
             </table>
 
@@ -320,7 +376,8 @@ function AnaliseAtivos({ list }) {
                                             {row.dataUltimoDividendoFmt}
                                         </TableCell> 
 
-                                        <TableCell key={row.id} align={row.align}>                                            
+                                        <TableCell key={row.id} align={row.align}>          
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                     
                                             <Button variant='success' onClick={() => handleOpenDialog(row)}> <DeleteIcon /> </Button> 
                                         </TableCell>
                                     </TableRow>
@@ -357,6 +414,43 @@ function AnaliseAtivos({ list }) {
                     <DialogTitle id="alert-dialog-title" >
                         <Button onClick={handleCloseDialog}>Fechar</Button>
                         <Button onClick={handleDelete}>Confirmar</Button>
+                    </DialogTitle>
+                </DialogActions>
+
+                
+                <br></br>        
+                {errorSubmit === true ? (
+                    <FormHelperText error={errorSubmit}>
+                       <fontSize className={classes.msgError}> {msgErrorSubmit} </fontSize> 
+                    </FormHelperText>
+                ) : ('') }
+
+            </Dialog>
+
+            <Dialog
+                open={openDialogDelete}
+                onClose={handleCloseDialogDeleteAll}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+                maxWidth="700px"
+            >
+                <DialogTitle id="alert-dialog-title" >
+                    Confirmação de limpeza de análises
+                </DialogTitle>
+
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        <div className={classes.paddingDialogRow}>
+                            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                                Você deseja realmente limpar todas as análises?
+                            </Typography>                            
+                        </div>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <DialogTitle id="alert-dialog-title" >
+                        <Button onClick={handleCloseDialogDeleteAll}>Fechar</Button>
+                        <Button onClick={handleConfirmDeleteAll}>Confirmar</Button>
                     </DialogTitle>
                 </DialogActions>
 

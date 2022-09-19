@@ -1,7 +1,9 @@
 import Layout from "../../../components/Layout";
 
 
-import TextField from '@mui/material/TextField';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box';
 
@@ -12,17 +14,17 @@ import { useRouter } from 'next/router'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
 import Collapse from '@mui/material/Collapse';
 
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { FUNDO_IMOBILIARIO_COTACAO_URL } from '../../../constants/constants';
+import { FUNDO_IMOBILIARIO_COTACAO_URL, FUNDO_IMOBILIARIO_URL, ATIVOS_ANALISE_URL, FUNDO_IMOBILIARIO_ANALISE_URL } from '../../../constants/constants';
+
+ 
 
 const useStyles = makeStyles({
     box: {
@@ -53,6 +55,45 @@ function CalculaPorcentagemCrescimentoCotacoes({ result }) {
         setValue(newValue);        
     };
 
+    const handleAddAtivoAnalise = async (sigla) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/fundo imobiliario/' + sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de Ativos sendo analisados: ' + sigla) 
+    }
+
+    const handleAddAnalise = async (sigla) => {
+
+        const response = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/add-fundo/' + sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de analises: ' + sigla) 
+    }
+
+    function handleDetail(sigla) {       
+        router.push({
+            pathname:  '/fundo-imobiliario/detail',
+            query: { sigla: sigla },
+        }) 
+    }
+
     return (
         <Layout title="Quantitative System">
             <h1>Calculo Porcentagem Crescimento Fundos Imobiliarios</h1>
@@ -81,6 +122,7 @@ function CalculaPorcentagemCrescimentoCotacoes({ result }) {
                                                             <TableRow>
                                                                 <TableCell>Sigla</TableCell>
                                                                 <TableCell>Somatório Porcentagem</TableCell>
+                                                                <TableCell>Actions</TableCell>
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
@@ -89,6 +131,9 @@ function CalculaPorcentagemCrescimentoCotacoes({ result }) {
                                                                     {sum.sigla}
                                                                 </TableCell>
                                                                 <TableCell>{sum.sumIncreasePercentFmt}</TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleDetail(sum.sigla)}> <ZoomInOutlinedIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAnalise(sum.sigla)}> <AddBoxIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAtivoAnalise(sum.sigla)}> <ArrowCircleUpIcon /> </Button>  </TableCell>
                                                             </TableRow>
                                                         </TableBody>
                                                         <br></br><br></br>
@@ -106,6 +151,7 @@ function CalculaPorcentagemCrescimentoCotacoes({ result }) {
                                                             <TableRow>
                                                                 <TableCell>Sigla</TableCell>
                                                                 <TableCell>Somatório Porcentagem</TableCell>
+                                                                <TableCell>Actions</TableCell>
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
@@ -114,6 +160,9 @@ function CalculaPorcentagemCrescimentoCotacoes({ result }) {
                                                                     {count.sigla}
                                                                 </TableCell>
                                                                 <TableCell>{count.sumIncreasePercentFmt}</TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleDetail(count.sigla)}> <ZoomInOutlinedIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAnalise(count.sigla)}> <AddBoxIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAtivoAnalise(count.sigla)}> <ArrowCircleUpIcon /> </Button>  </TableCell>
                                                             </TableRow>
                                                         </TableBody>
                                                         <br></br><br></br>
@@ -131,6 +180,7 @@ function CalculaPorcentagemCrescimentoCotacoes({ result }) {
                                                             <TableRow>
                                                                 <TableCell>Sigla</TableCell>
                                                                 <TableCell>Somatório Porcentagem</TableCell>
+                                                                <TableCell>Actions</TableCell>
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
@@ -139,6 +189,9 @@ function CalculaPorcentagemCrescimentoCotacoes({ result }) {
                                                                     {count.sigla}
                                                                 </TableCell>
                                                                 <TableCell>{count.sumIncreasePercentFmt}</TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleDetail(count.sigla)}> <ZoomInOutlinedIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAnalise(count.sigla)}> <AddBoxIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAtivoAnalise(count.sigla)}> <ArrowCircleUpIcon /> </Button>  </TableCell>
                                                             </TableRow>
                                                         </TableBody>
                                                         <br></br><br></br>
