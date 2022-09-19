@@ -32,7 +32,7 @@ import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
 import { BDR_URL } from '../../constants/constants';
 import { BDR_ANALISE_URL } from '../../constants/constants';
-import { ATIVOS_URL } from '../../constants/constants';
+import { ATIVOS_URL, ATIVOS_ANALISE_URL } from '../../constants/constants';
 
 
 const useStyles = makeStyles({
@@ -161,7 +161,7 @@ function Bdr({ list }) {
 
     const handleAddAtivoAnalise = async (row) => {
 
-        const response = await fetch(ATIVOS_URL + '/add-analise-ativo/bdr/' + row.sigla, {
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/bdr/' + row.sigla, {
             method: 'POST',
             body: JSON.stringify(
                 {                

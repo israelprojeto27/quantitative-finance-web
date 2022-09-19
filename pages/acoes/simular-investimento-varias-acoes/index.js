@@ -32,6 +32,8 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 import { ACAO_SIMULACAO_INVESTIMENTO_URL } from '../../../constants/constants'
 
+import DeleteIcon from '@mui/icons-material/Delete';
+
 const useStyles = makeStyles({
     paddingDialogRow: {
         paddingTop: '20px'
@@ -156,7 +158,7 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
         setOpenDialog(false);
     };
 
-    const handleDelete = async () => {        
+    const handleSubmitDelete = async () => {        
         setOpenDialog(false);
 
         const response = await fetch(ACAO_SIMULACAO_INVESTIMENTO_URL  + '/delete-simulacao-detail-investimento/'+ siglaSelecionada, {
@@ -166,7 +168,7 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
         router.push('/acoes/simular-investimento-varias-acoes/') 
     };    
 
-    function handleDetail(sigla) {    
+    function handleDelete(sigla) {    
         setOpenDialog(true);
         console.log('sigla selecionada: ' + sigla)        
         setSiglaSelecionada(sigla)
@@ -179,7 +181,16 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
         })
     }
 
-    
+    function handleDetail(row) {
+        router.push({
+            pathname: '/acoes/detail',
+            query: { sigla: row.sigla },
+        })
+    }
+
+    function goBack(){
+        router.push('/acoes')
+    }
 
 
     useEffect(() => { 
@@ -223,7 +234,16 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
             <br></br> <br></br>
 
             <div className={classes.buttonAdd}>
-                    <Button variant="contained" fullWidth="true" onClick={goAddSimulacaoInvestimentoDetail}>Adicionar</Button>
+                <table>
+                    <tr>
+                        <td>
+                            <Button variant="contained" fullWidth="true" onClick={goAddSimulacaoInvestimentoDetail}>Adicionar</Button>
+                        </td>
+                        <td>
+                        <Button variant="contained" fullWidth="true" onClick={goBack}>Voltar</Button>    
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             <br></br>  
@@ -269,7 +289,8 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
                                             {row.dataUltimaCotacaoFmt}
                                         </TableCell>                                       
                                         <TableCell key={row.id} align={row.align}>
-                                            <Button variant='success' onClick={() => handleDetail(row.sigla)}> <ZoomInOutlinedIcon /> </Button>      
+                                            <Button variant='success' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>      
+                                            <Button variant='success' onClick={() => handleDelete(row.sigla)}> <DeleteIcon /> </Button>      
                                             <Button variant='success' onClick={() => handleEdit(row)}> <EditOutlinedIcon /> </Button>    
                                         </TableCell>    
                                     </TableRow>
@@ -305,7 +326,7 @@ function SimularInvestimentoVariasAcoes({ simulacao }) {
                 <DialogActions>
                     <DialogTitle id="alert-dialog-title" >
                         <Button onClick={handleCloseDialog}>Fechar</Button>
-                        <Button onClick={handleDelete}>Confirmar</Button>
+                        <Button onClick={handleSubmitDelete}>Confirmar</Button>
                     </DialogTitle>
                 </DialogActions>
 

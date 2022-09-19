@@ -81,7 +81,7 @@ function Uploads() {
     
     function handleChange(event, field) {            
         if (field === 'pathArquivo') {
-            setPathArquivo(event.currentTarget.value);
+            setPathArquivo(event.target.files[0]);
         }         
     }
 
@@ -144,14 +144,14 @@ function Uploads() {
        else  if ( tipoUpload === 'bdrParcial'){
 
             setMensagemExecucao('Em execução ...')
+            const formData = new FormData();
+            formData.append("document", pathArquivo);
             const response = await fetch(BDR_URL + '/uploadPartial' , {
-                method: 'POST',
-                body: JSON.stringify(
-                    {                        
-                        document: pathArquivo // checar ainda qual deve ser o campo referente ao path do arquivo
-                    }),
+                method: 'POST',                
+                data: formData,
                 headers: {
-                    'Content-type': 'multipart/form-data'
+                    "Content-Type": "multipart/form-data@"+pathArquivo+";type=application/x-zip-compressed'",
+                    'accept': '*/*'
                 }
             })
             setMensagemExecucao('Execução finalizada !!!')

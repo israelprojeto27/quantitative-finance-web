@@ -31,7 +31,7 @@ import { ACAO_URL } from '../../../constants/constants';
 
 import  HeadListResult  from './components/HeadListResult'
 
-
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 
 const useStyles = makeStyles({
     paddingDialogRow: {
@@ -123,6 +123,17 @@ function SimularValorRendimentoCotas() {
             setSelectTipoOrdenacao(event.target.value);
         }
     };
+
+    function handleDetail(row) {
+        router.push({
+            pathname: '/acoes/detail',
+            query: { sigla: row.sigla },
+        })
+    }
+
+    function goBack() {
+        router.push('/acoes');
+    }
 
     return (
         <Layout title="Quantitative System">
@@ -229,7 +240,19 @@ function SimularValorRendimentoCotas() {
                         >
                             Filtrar
                         </Button>
-                    </td>                  
+                    </td>   
+
+                     <td>
+                        <Button
+                            id="basic-button"
+                            variant="contained"
+                            aria-haspopup="true"
+                            onClick={goBack}
+                            className={classes.text}
+                        >
+                            Voltar
+                        </Button>
+                    </td>                
                 </tr>
             </table>
 
@@ -264,7 +287,7 @@ function SimularValorRendimentoCotas() {
                                             {row.dataUltimoDividendoFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            
+                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>   
                                         </TableCell>
                                     </TableRow>
                                 );

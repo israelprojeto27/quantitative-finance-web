@@ -31,7 +31,7 @@ import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
 import { FUNDO_IMOBILIARIO_URL } from '../../constants/constants';
 import { FUNDO_IMOBILIARIO_ANALISE_URL } from '../../constants/constants';
-import { ATIVOS_URL } from '../../constants/constants';
+import {  ATIVOS_ANALISE_URL } from '../../constants/constants';
 
 const useStyles = makeStyles({
     paddingDialogRow: {
@@ -160,7 +160,7 @@ function FundoImobiliario({ list }) {
 
     const handleAddAtivoAnalise = async (row) => {
 
-        const response = await fetch(ATIVOS_URL + '/add-analise-ativo/fundo imobiliario/' + row.sigla, {
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/fundo imobiliario/' + row.sigla, {
             method: 'POST',
             body: JSON.stringify(
                 {                

@@ -22,7 +22,11 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 
-import { FUNDO_IMOBILIARIO_URL } from '../../../constants/constants';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+
+import { FUNDO_IMOBILIARIO_URL, ATIVOS_ANALISE_URL, FUNDO_IMOBILIARIO_ANALISE_URL } from '../../../constants/constants';
 
 
 const useStyles = makeStyles({
@@ -79,6 +83,45 @@ function MapaDividendosBdr() {
     function handleSelectTab (newValue) {
         setValue(newValue);        
     };
+
+    const handleAddAtivoAnalise = async (sigla) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/fundo imobiliario/' + sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de Ativos sendo analisados: ' + sigla) 
+    }
+
+    const handleAddAnalise = async (sigla) => {
+
+        const response = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/add-fundo/' + sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de analises: ' + sigla) 
+    }
+
+    function handleDetail(sigla) {       
+        router.push({
+            pathname:  '/fundo-imobiliario/detail',
+            query: { sigla: sigla },
+        }) 
+    }
 
     return (
         <Layout title="Quantitative System">
@@ -149,6 +192,7 @@ function MapaDividendosBdr() {
                                                             <TableRow>
                                                                 <TableCell>Sigla</TableCell>
                                                                 <TableCell>Somatório Dividendos R$ (no período)</TableCell>
+                                                                <TableCell>Actions</TableCell>
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
@@ -157,6 +201,11 @@ function MapaDividendosBdr() {
                                                                     {sum.sigla}
                                                                 </TableCell>
                                                                 <TableCell>{sum.sumDividendosFmt}</TableCell>
+
+                                                                <TableCell><Button variant='succes' onClick={() => handleDetail(sum.sigla)}> <ZoomInOutlinedIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAnalise(sum.sigla)}> <AddBoxIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAtivoAnalise(sum.sigla)}> <ArrowCircleUpIcon /> </Button>  </TableCell>
+ 
                                                             </TableRow>
                                                         </TableBody>
                                                         <br></br><br></br>
@@ -174,6 +223,7 @@ function MapaDividendosBdr() {
                                                             <TableRow>
                                                                 <TableCell>Sigla</TableCell>
                                                                 <TableCell>Quantidade de Ocorrências de Dividendos</TableCell>
+                                                                <TableCell>Actions</TableCell>
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
@@ -182,6 +232,9 @@ function MapaDividendosBdr() {
                                                                     {count.sigla}
                                                                 </TableCell>
                                                                 <TableCell>{count.countDividendos}</TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleDetail(count.sigla)}> <ZoomInOutlinedIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAnalise(count.sigla)}> <AddBoxIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAtivoAnalise(count.sigla)}> <ArrowCircleUpIcon /> </Button>  </TableCell>
                                                             </TableRow>
                                                         </TableBody>
                                                         <br></br><br></br>
@@ -204,6 +257,7 @@ function MapaDividendosBdr() {
                                                                 <TableRow>
                                                                     <TableCell>Sigla</TableCell>
                                                                     <TableCell>Valor Dividendo R$</TableCell>
+                                                                    <TableCell>Actions</TableCell>
                                                                 </TableRow>
                                                             </TableHead>
                                                             <TableBody>
@@ -214,6 +268,9 @@ function MapaDividendosBdr() {
                                                                                 {detalhe.sigla}
                                                                             </TableCell>
                                                                             <TableCell>{detalhe.dividendoFmt}</TableCell>
+                                                                            <TableCell><Button variant='succes' onClick={() => handleDetail(detalhe.sigla)}> <ZoomInOutlinedIcon /> </Button>  </TableCell>
+                                                                            <TableCell><Button variant='succes' onClick={() => handleAddAnalise(detalhe.sigla)}> <AddBoxIcon /> </Button>  </TableCell>
+                                                                            <TableCell><Button variant='succes' onClick={() => handleAddAtivoAnalise(detalhe.sigla)}> <ArrowCircleUpIcon /> </Button>  </TableCell>
                                                                         </TableRow>
                                                                     );
                                                                 })}
@@ -236,6 +293,7 @@ function MapaDividendosBdr() {
                                                             <TableRow>
                                                                 <TableCell>Sigla</TableCell>
                                                                 <TableCell>Coeficiente ROI</TableCell>
+                                                                <TableCell>Actions</TableCell>
                                                             </TableRow>
                                                         </TableHead>
                                                         <TableBody>
@@ -244,6 +302,9 @@ function MapaDividendosBdr() {
                                                                     {count.sigla}
                                                                 </TableCell>
                                                                 <TableCell>{count.coeficienteRoiFmt}</TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleDetail(count.sigla)}> <ZoomInOutlinedIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAnalise(count.sigla)}> <AddBoxIcon /> </Button>  </TableCell>
+                                                                <TableCell><Button variant='succes' onClick={() => handleAddAtivoAnalise(count.sigla)}> <ArrowCircleUpIcon /> </Button>  </TableCell>
                                                             </TableRow>
                                                         </TableBody>
                                                         <br></br><br></br>

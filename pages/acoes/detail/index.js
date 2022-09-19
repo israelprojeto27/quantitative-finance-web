@@ -12,7 +12,7 @@ import { withRouter } from 'next/router';
 
 
 import { useRouter } from 'next/router'
-import { ACAO_URL, ACAO_COTACAO_URL } from '../../../constants/constants';
+import { ATIVOS_ANALISE_URL, ACAO_ANALISE_URL, ACAO_COTACAO_URL } from '../../../constants/constants';
 import TabListCotacoesDiarias from './TabListCotacoesDiarias';
 import TabListCotacoesSemanais from './TabListCotacoesSemanais';
 import TabListCotacoesMensais from './TabListCotacoesMensais';
@@ -23,6 +23,7 @@ import TabListDividendos from './TabListDividendos';
 import TabValorRendimentoDividendos from './TabValorRendimentoDividendos';
 import TabValorRendimentoDividendosQuantCotas from './TabValorRendimentoDividendosQuantCotas';
 import TabListRoiDividendoCotacao from './TabListRoiDividendoCotacao';
+import { Button } from '@mui/material'
 
 
 const useStyles = makeStyles({
@@ -39,6 +40,10 @@ const useStyles = makeStyles({
     button: {
         paddingTop: '25px',
         maxWidth: '850px'
+    },
+    buttonback: {
+        paddingTop: '25px',
+        maxWidth: '250px'
     },
 });  
 
@@ -58,9 +63,72 @@ function index({detalheAcao}) {
         setDetail(detalheAcao)
     }, [router.query]);
 
+    function goBack() {
+        router.back();
+    }
+
+    const handleAddAtivoAnalise = async (event) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/acao/' + detail.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de Ativos sendo analisados: ' + detail.sigla) 
+    }
+
+    const handleAddAnalise = async (event) => {
+
+        const response = await fetch(ACAO_ANALISE_URL + '/add-acao/' + detail.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de analises: ' + detail.sigla) 
+    }
+
     return (
         <Layout>
-            Tela de Detalhes da Ação
+
+            <br></br>
+            
+            <h1>Tela de Detalhes da Ação</h1>            
+
+            <br></br>
+
+            <p><strong> Ação selecionada:  </strong>{detalheAcao.sigla}</p>
+
+            <br></br>  
+
+            <table>
+                <tr>
+                    <td>
+                        <Button variant="contained" fullWidth="true" onClick={goBack}>Voltar</Button>
+                    </td>
+                    <td>
+                    <Button variant='contained' onClick={(e) => handleAddAnalise(e)} >Add Lista Análise Ações</Button>
+                     
+                    </td>
+                    <td>
+                    <Button variant='contained' onClick={(e) => handleAddAtivoAnalise(e)} >Add Lista Análise Ativos</Button>
+                    </td>
+                </tr>
+            </table>
+            
+
+            
 
             <br></br> <br></br>
 

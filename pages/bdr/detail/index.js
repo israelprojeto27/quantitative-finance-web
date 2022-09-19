@@ -10,9 +10,10 @@ import { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { withRouter } from 'next/router';
 
+import { Button } from '@mui/material'
 
 import { useRouter } from 'next/router'
-import { BDR_URL, BDR_COTACAO_URL } from '../../../constants/constants';
+import { BDR_ANALISE_URL, BDR_COTACAO_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants';
 import TabListCotacoesDiarias from './TabListCotacoesDiarias';
 import TabListCotacoesSemanais from './TabListCotacoesSemanais';
 import TabListCotacoesMensais from './TabListCotacoesMensais';
@@ -29,7 +30,11 @@ const useStyles = makeStyles({
     tabselect: {
         background: 'green',
         color: 'white'
-    }
+    },
+    buttonback: {
+        paddingTop: '25px',
+        maxWidth: '250px'
+    },
 });  
 
 function index({detalheBdr}) {
@@ -48,9 +53,70 @@ function index({detalheBdr}) {
         setDetail(detalheBdr)
     }, [router.query]);
 
+    function goBack() {
+        router.back();
+    }
+
+    const handleAddAtivoAnalise = async (event) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/bdr/' + detalheBdr.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('BDR adicionado na lista de Ativos sendo analisados: ' + detalheBdr.sigla) 
+    }
+
+    const handleAddAnalise = async (event) => {
+
+        const response = await fetch(BDR_ANALISE_URL + '/add-bdr/' + detalheBdr.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('BDR adicionado na lista de analises: ' + detalheBdr.sigla) 
+    }
+
+
     return (
         <Layout>
-            Tela de Detalhes do BDR
+
+            <br></br>
+
+            <h1>Tela de Detalhes do BDR</h1>
+
+            <p><strong> BDR selecionado:  </strong>{detalheBdr.sigla}</p>
+
+            <br></br>  
+
+            <table>
+                <tr>
+                    <td>
+                        <Button variant="contained" fullWidth="true" onClick={goBack}>Voltar</Button>
+                    </td>
+                    <td>
+                    <Button variant='contained' onClick={(e) => handleAddAnalise(e)} >Add Lista Análise BDRs</Button>
+                     
+                    </td>
+                    <td>
+                    <Button variant='contained' onClick={(e) => handleAddAtivoAnalise(e)} >Add Lista Análise Ativos</Button>
+                    </td>
+                </tr>
+            </table>
+
+
 
             <br></br> <br></br>
 

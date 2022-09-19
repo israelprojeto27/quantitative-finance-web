@@ -32,7 +32,7 @@ import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
 import { ACAO_URL } from '../../constants/constants';
 import { ACAO_ANALISE_URL } from '../../constants/constants';
-import { ATIVOS_URL } from '../../constants/constants';
+import { ATIVOS_ANALISE_URL } from '../../constants/constants';
 
 
 const useStyles = makeStyles({
@@ -109,7 +109,7 @@ function Acoes({ list }) {
     
     const handleAddAtivoAnalise = async (row) => {
 
-        const response = await fetch(ATIVOS_URL + '/add-analise-ativo/acao/' + row.sigla, {
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/acao/' + row.sigla, {
             method: 'POST',
             body: JSON.stringify(
                 {                

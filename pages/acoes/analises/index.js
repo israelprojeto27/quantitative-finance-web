@@ -20,6 +20,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FormHelperText from '@mui/material/FormHelperText';
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import { Button } from '@mui/material'
 
 import Box from '@mui/material/Box';
@@ -187,6 +188,13 @@ function AnalisesAcoes({ list }) {
         
     }   
 
+    function handleDetail(row) {
+        router.push({
+            pathname: '/acoes/detail',
+            query: { sigla: row.sigla },
+        })
+    }
+
 
 
     return (
@@ -352,7 +360,8 @@ function AnalisesAcoes({ list }) {
                                         </TableCell> 
 
 
-                                        <TableCell key={row.id} align={row.align}>                                            
+                                        <TableCell key={row.id} align={row.align}>   
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                         
                                             <Button variant='success' onClick={() => handleOpenDialog(row)}> <DeleteIcon /> </Button> 
                                         </TableCell>
                                     </TableRow>

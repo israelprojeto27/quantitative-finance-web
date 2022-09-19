@@ -21,7 +21,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Menu from '@mui/material/Menu';
+ 
 
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -31,7 +31,7 @@ import { ACAO_URL } from '../../../constants/constants';
 
 import  HeadListResult  from './components/HeadListResult'
 
-
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 
 const useStyles = makeStyles({
     paddingDialogRow: {
@@ -123,6 +123,18 @@ function SimularValorInvest() {
             setSelectTipoOrdenacao(event.target.value);
         }
     };
+
+    
+    function handleDetail(row) {
+        router.push({
+            pathname: '/acoes/detail',
+            query: { sigla: row.sigla },
+        })
+    }
+
+    function goBack() {
+        router.push('/acoes');
+    }
 
     return (
         <Layout title="Quantitative System">
@@ -229,7 +241,19 @@ function SimularValorInvest() {
                         >
                             Filtrar
                         </Button>
-                    </td>                  
+                    </td>  
+
+                    <td>
+                        <Button
+                            id="basic-button"
+                            variant="contained"
+                            aria-haspopup="true"
+                            onClick={goBack}
+                            className={classes.text}
+                        >
+                            Voltar
+                        </Button>
+                    </td>                   
                 </tr>
             </table>
 
@@ -261,7 +285,7 @@ function SimularValorInvest() {
                                             {row.dataUltimoDividendoFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button> 
                                         </TableCell>
                                     </TableRow>
                                 );

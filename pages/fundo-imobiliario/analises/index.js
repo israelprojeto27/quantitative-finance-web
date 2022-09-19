@@ -20,7 +20,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import FormHelperText from '@mui/material/FormHelperText';
 
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button } from '@mui/material'
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -28,13 +27,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Menu from '@mui/material/Menu';
-import TextField from '@mui/material/TextField';
 
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
+import { Button } from '@mui/material'
 
 import { FUNDO_IMOBILIARIO_ANALISE_URL } from '../../../constants/constants';
 
@@ -166,6 +161,13 @@ function AnalisesFundosImobiliarios({ list }) {
             setSelectTipoOrdenacao(event.target.value);
         }
     };
+
+    function handleDetail(row) {       
+        router.push({
+            pathname:  '/fundo-imobiliario/detail',
+            query: { sigla: row.sigla },
+        }) 
+    }
 
 
     return (
@@ -310,8 +312,8 @@ function AnalisesFundosImobiliarios({ list }) {
                                             {row.dataUltimoDividendoFmt}
                                         </TableCell> 
 
-
-                                        <TableCell key={row.id} align={row.align}>                                            
+                                        <TableCell key={row.id} align={row.align}>  
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                            
                                             <Button variant='success' onClick={() => handleOpenDialog(row)}> <DeleteIcon /> </Button> 
                                         </TableCell>
                                     </TableRow>

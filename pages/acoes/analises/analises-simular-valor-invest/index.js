@@ -21,11 +21,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import Menu from '@mui/material/Menu';
-
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
+ 
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 
 import { ACAO_ANALISE_URL } from '../../../../constants/constants';
 
@@ -117,6 +114,13 @@ function AnaliseAcoesSimularValorInvest() {
             setSelectTipoOrdenacao(event.target.value);
         }
     };
+
+    function handleDetail(row) {
+        router.push({
+            pathname: '/acoes/detail',
+            query: { sigla: row.sigla },
+        })
+    }
 
   
     return (
@@ -249,7 +253,7 @@ function AnaliseAcoesSimularValorInvest() {
                                             {row.dataUltimoDividendoFmt}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                            
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>   
                                         </TableCell>
                                     </TableRow>
                                 );

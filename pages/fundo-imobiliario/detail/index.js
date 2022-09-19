@@ -9,10 +9,10 @@ import TabPanel from '@mui/lab/TabPanel';
 import { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { withRouter } from 'next/router';
-
+import { Button } from '@mui/material'
 
 import { useRouter } from 'next/router'
-import { FUNDO_IMOBILIARIO_URL, FUNDO_IMOBILIARIO_COTACAO_URL } from '../../../constants/constants';
+import { FUNDO_IMOBILIARIO_ANALISE_URL, FUNDO_IMOBILIARIO_COTACAO_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants';
 import TabListCotacoesDiarias from './TabListCotacoesDiarias';
 import TabListCotacoesSemanais from './TabListCotacoesSemanais';
 import TabListCotacoesMensais from './TabListCotacoesMensais';
@@ -29,7 +29,11 @@ const useStyles = makeStyles({
     tabselect: {
         background: 'green',
         color: 'white'
-    }
+    },
+    buttonback: {
+        paddingTop: '25px',
+        maxWidth: '250px'
+    },
 });  
 
 function index({detalheFundo}) {
@@ -48,9 +52,71 @@ function index({detalheFundo}) {
         setDetail(detalheFundo)
     }, [router.query]);
 
+    function goBack() {
+        router.back();
+    }
+
+    const handleAddAtivoAnalise = async (event) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/fundo imobiliario/' + detalheFundo.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de Ativos sendo analisados: ' + detalheFundo.sigla) 
+    }
+
+    const handleAddAnalise = async (event) => {
+
+        const response = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/add-fundo/' + detalheFundo.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Fundo Imobiliario adicionado na lista de analises: ' + detalheFundo.sigla) 
+    }
+
+
     return (
         <Layout>
-            Tela de Detalhes do Fundo Imobiliario
+
+            <br></br>
+            
+            <h1> Tela de Detalhes do Fundo Imobiliario</h1>            
+ 
+            <br></br>
+
+            <p><strong> Fundo imobiliario selecionado:  </strong>{detalheFundo.sigla}</p>
+
+            <br></br>  
+
+            <table>
+                <tr>
+                    <td>
+                        <Button variant="contained" fullWidth="true" onClick={goBack}>Voltar</Button>
+                    </td>
+                    <td>
+                    <Button variant='contained' onClick={(e) => handleAddAnalise(e)} >Add Lista Análise Fundos Imobiliários</Button>
+                     
+                    </td>
+                    <td>
+                    <Button variant='contained' onClick={(e) => handleAddAtivoAnalise(e)} >Add Lista Análise Ativos</Button>
+                    </td>
+                </tr>
+            </table>
+
 
             <br></br> <br></br>
 

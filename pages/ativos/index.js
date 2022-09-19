@@ -20,7 +20,7 @@ import Select from '@mui/material/Select';
 import Menu from '@mui/material/Menu';
 
  
-
+import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import { Button } from '@mui/material'
 
 import { ATIVOS_URL } from '../../constants/constants'
@@ -121,7 +121,7 @@ function Ativos({ list }) {
             router.push('/ativos/analises')
         }  
         else if ( select === 'simularValorInvestimentos'){            
-            router.push('/ativos/simula-valor-investimentos')
+            router.push('/ativos/valor-investimento')
         }  
         else if ( select === 'calculaPorcentagemAtivos'){            
             router.push('/ativos/calcula-porcentagem-crescimento-cotacoes')
@@ -135,6 +135,29 @@ function Ativos({ list }) {
 
     function handleCloseMenu() {
         setOpen(false);
+    }
+
+    function handleDetail(row) {
+
+        if ( row.tipoAtivo === 'acao'){
+            router.push({
+                pathname: '/acoes/detail',
+                query: { sigla: row.sigla },
+            })
+        }        
+        else if ( row.tipoAtivo === 'fundo imobiliario'){
+            router.push({
+                pathname: '/fundo-imobiliario/detail',
+                query: { sigla: row.sigla },
+            })
+        }    
+        else if ( row.tipoAtivo === 'bdr'){
+            router.push({
+                pathname: '/bdr/detail',
+                query: { sigla: row.sigla },
+            })
+        }   
+        
     }
 
     return (
@@ -282,7 +305,7 @@ function Ativos({ list }) {
 
 
                                         <TableCell key={row.id} align={row.align}>                                            
-                                           
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>
                                         </TableCell>
                                     </TableRow>
                                 );

@@ -39,6 +39,10 @@ const useStyles = makeStyles({
         background: 'green',
         color: 'white'
     },
+    buttonAdd: {
+        paddingTop: '50px',
+        maxWidth: '200px'
+    }, 
 });
 
 
@@ -53,11 +57,27 @@ function CalculaPorcentagemCrescimentoCotacoes({ result }) {
         setValue(newValue);        
     };
 
+    function goBack() {
+        router.push('/acoes');
+    }
+
     return (
         <Layout title="Quantitative System">
             <h1>Calculo Porcentagem Crescimento Ações</h1>
 
-            <br></br> <br></br> <br></br>
+            <br></br> <br></br>  
+
+            <div className={classes.buttonAdd}>
+                <table>
+                    <tr>                  
+                        <td>
+                            <Button variant="contained" fullWidth="true" onClick={goBack}>Voltar</Button>    
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <br></br>
 
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
