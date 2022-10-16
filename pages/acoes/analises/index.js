@@ -38,7 +38,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 
-import { ACAO_ANALISE_URL } from '../../../constants/constants';
+import { ACAO_ANALISE_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants';
 
 export const columnsList = [
     { id: 1, label: 'Sigla', align: 'left', minWidth: 10, },
@@ -216,6 +216,23 @@ function AnalisesAcoes({ list }) {
             query: { sigla: row.sigla },
         })
     }
+
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/acao/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Ação adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
+    }
+
 
 
 
@@ -395,7 +412,8 @@ function AnalisesAcoes({ list }) {
 
 
                                         <TableCell key={row.id} align={row.align}>   
-                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                         
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>  
+                                            <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>                                       
                                             <Button variant='success' onClick={() => handleOpenDialog(row)}> <DeleteIcon /> </Button> 
                                         </TableCell>
                                     </TableRow>
