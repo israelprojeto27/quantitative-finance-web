@@ -112,6 +112,10 @@ function index({detalheAcao}) {
 
             <br></br>  
 
+            <p><strong> Dividend Yield (em %):  </strong>{detalheAcao.dividendYield}</p>
+
+            <br></br> 
+
             <table>
                 <tr>
                     <td>

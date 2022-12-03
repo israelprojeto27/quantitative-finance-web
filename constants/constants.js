@@ -33,6 +33,19 @@ export const BDR_SIMULACAO_INVESTIMENTO_URL = BASE_URL + '/simula-investimento-b
 
 export const BDR_ANALISE_URL = BASE_URL + '/analise-bdr';
 
+
+export const STOCK_URL = BASE_URL + '/stock';
+
+export const STOCK_DIVIDENDO_URL = BASE_URL + '/dividendo-stock';
+
+export const STOCK_COTACAO_URL = BASE_URL + '/cotacao-stock';
+
+export const STOCK_SIMULACAO_INVESTIMENTO_URL = BASE_URL + '/simula-investimento-stock';
+
+export const STOCK_ANALISE_URL = BASE_URL + '/analise-stock';
+
+
+
 export const PARAMETRO_URL = BASE_URL + '/parametro';
 
 export const ATIVOS_URL = BASE_URL + '/ativos';

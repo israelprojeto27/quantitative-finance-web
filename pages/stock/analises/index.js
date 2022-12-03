@@ -38,7 +38,7 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 
-import { ACAO_ANALISE_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants';
+import { STOCK_ANALISE_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants';
 
 export const columnsList = [
     { id: 1, label: 'Sigla', align: 'left', minWidth: 10, },
@@ -85,7 +85,7 @@ const useStyles = makeStyles({
         paddingLeft: '10px'
     }, 
 });
-function AnalisesAcoes({ list }) {
+function AnalisesStocks({ list }) {
     const classes = useStyles();
     const router = useRouter();
 
@@ -122,12 +122,12 @@ function AnalisesAcoes({ list }) {
     };
 
     const handleDelete = async () => {  
-        const response = await fetch(ACAO_ANALISE_URL  + '/' + acaoSelecionada, {
+        const response = await fetch(STOCK_ANALISE_URL  + '/' + acaoSelecionada, {
             method: 'DELETE'           
         })
         const data = await response.json()  
         
-        const res = await fetch(ACAO_ANALISE_URL )
+        const res = await fetch(STOCK_ANALISE_URL )
         const list = await res.json()
         setRowsList(list)
 
@@ -143,12 +143,12 @@ function AnalisesAcoes({ list }) {
     };
 
     const handleConfirmDeleteAll = async () => {  
-        const response = await fetch(ACAO_ANALISE_URL  + '/delete-all-analises', {
+        const response = await fetch(STOCK_ANALISE_URL  + '/delete-all-analises', {
             method: 'DELETE'           
         })
         const data = await response.json()  
         
-        const res = await fetch(ACAO_ANALISE_URL )
+        const res = await fetch(STOCK_ANALISE_URL )
         const list = await res.json()
         setRowsList(list)
         setOpenDialogDelete(false);
@@ -156,7 +156,7 @@ function AnalisesAcoes({ list }) {
 
     const handleSearchPapel = async () => {
         setRowsList([]);
-        const res = await fetch(ACAO_ANALISE_URL + '/filter-by-sigla/' + searchPapel)
+        const res = await fetch(STOCK_ANALISE_URL + '/filter-by-sigla/' + searchPapel)
         const list = await res.json()
         setRowsList(list)
     }
@@ -179,7 +179,7 @@ function AnalisesAcoes({ list }) {
     const handleFilter = async () => {
         setRowsList([]);
         setSearchPapel('')
-        const res = await fetch(ACAO_ANALISE_URL + '/filter?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
+        const res = await fetch(STOCK_ANALISE_URL + '/filter?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
         const list = await res.json()
         setRowsList(list)
     }
@@ -197,23 +197,23 @@ function AnalisesAcoes({ list }) {
     
     function handleSelect(event, select) {
         if ( select === 'mapaDividendos'){
-            router.push('/acoes/analises/analises-mapa-dividendos')
+            router.push('/stock/analises/analises-mapa-dividendos')
         }         
         else if ( select === 'simularValorInvest'){
-            router.push('/acoes/analises/analises-simular-valor-invest')
+            router.push('/stock/analises/analises-simular-valor-invest')
         } 
         else if ( select === 'simularValorRendimentoCotas'){
-            router.push('/acoes/analises/analises-simular-valor-rendimento-cotas')
+            router.push('/stock/analises/analises-simular-valor-rendimento-cotas')
         } 
         else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){
-            router.push('/acoes/analises/analises-calcula-porcentagem-crescimento-cotacoes')
+            router.push('/stock/analises/analises-calcula-porcentagem-crescimento-cotacoes')
         } 
         
     }   
 
     function handleDetail(row) {
         router.push({
-            pathname: '/acoes/detail',
+            pathname: '/stock/detail',
             query: { sigla: row.sigla },
         })
     }
@@ -231,7 +231,7 @@ function AnalisesAcoes({ list }) {
             }
         })
         const data = await response.json()           
-        alert('Ação adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
+        alert('Stock adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
     }
 
 
@@ -239,7 +239,7 @@ function AnalisesAcoes({ list }) {
 
     return (
         <Layout title="Quantitative System">
-            <h1>Análises Ações</h1>
+            <h1>Análises Stocks</h1>
 
             <br></br> <br></br>
 
@@ -507,7 +507,7 @@ function AnalisesAcoes({ list }) {
     );
 }
 
-export default AnalisesAcoes;
+export default AnalisesStocks;
 
 export async function getStaticProps(context) {
     const res = await fetch(ACAO_ANALISE_URL )

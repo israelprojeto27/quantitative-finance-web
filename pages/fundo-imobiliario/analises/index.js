@@ -41,7 +41,8 @@ export const columnsList = [
     { id: 5, label: 'Data Ultima Cotação', align: 'left', minWidth: 10, },
     { id: 6, label: 'Valor Ultimo Dividendo R$', align: 'left', minWidth: 10, },    
     { id: 7, label: 'Data Ultimo Dividendo', align: 'left', minWidth: 10, },
-    { id: 8, label: 'Actions', align: 'left', minWidth: 10, },
+    { id: 8, label: 'Dividend Yield (em %)', align: 'left', minWidth: 10, },
+    { id: 9, label: 'Actions', align: 'left', minWidth: 10, },
 ];
 
 const useStyles = makeStyles({
@@ -221,6 +222,7 @@ function AnalisesFundosImobiliarios({ list }) {
                                     <MenuItem value={'dataUltCotacao'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Última Cotação</fontSize></MenuItem>
                                     <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
                                     <MenuItem value={'dataUltiDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Último Dividendo</fontSize></MenuItem>
+                                    <MenuItem value={'dividendYield'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Dividend Yield (em %)</fontSize></MenuItem>
                                 </Select>
 
                             </FormControl>
@@ -346,6 +348,9 @@ function AnalisesFundosImobiliarios({ list }) {
                                         </TableCell>    
                                         <TableCell key={row.id} align={row.align}>
                                             {row.dataUltimoDividendoFmt}
+                                        </TableCell> 
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.dividendYield}
                                         </TableCell> 
 
                                         <TableCell key={row.id} align={row.align}>  

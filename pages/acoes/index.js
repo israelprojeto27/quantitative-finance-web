@@ -237,6 +237,7 @@ function Acoes({ list }) {
                                     <MenuItem value={'dataUltCotacao'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Última Cotação</fontSize></MenuItem>
                                     <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
                                     <MenuItem value={'dataUltiDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Último Dividendo</fontSize></MenuItem>
+                                    <MenuItem value={'dividendYield'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Dividend Yield (em %)</fontSize></MenuItem>
                                 </Select>
 
                             </FormControl>
@@ -333,6 +334,9 @@ function Acoes({ list }) {
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
                                             {row.dataUltimoDividendo}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.dividendYield}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
                                             <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>

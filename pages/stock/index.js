@@ -5,10 +5,17 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+
 import TableRow from '@mui/material/TableRow';
 
 import ZoomInOutlinedIcon from '@mui/icons-material/ZoomInOutlined';
 import { Button } from '@mui/material'
+
+import TextField from '@mui/material/TextField';
+
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
@@ -19,19 +26,14 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Menu from '@mui/material/Menu';
 
-import TextField from '@mui/material/TextField';
-
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import SearchIcon from '@mui/icons-material/Search';
-
 import { makeStyles } from '@material-ui/styles';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import HeadList from '../../components/HeadList/HeadList';
-import { FUNDO_IMOBILIARIO_URL } from '../../constants/constants';
-import { FUNDO_IMOBILIARIO_ANALISE_URL } from '../../constants/constants';
-import {  ATIVOS_ANALISE_URL } from '../../constants/constants';
+import { STOCK_URL } from '../../constants/constants';
+import { STOCK_ANALISE_URL } from '../../constants/constants';
+import { ATIVOS_ANALISE_URL } from '../../constants/constants';
+
 
 const useStyles = makeStyles({
     paddingDialogRow: {
@@ -65,11 +67,10 @@ const useStyles = makeStyles({
     }
 });
 
-function FundoImobiliario({ list }) {
-
+function Stocks({ list }) {
     const classes = useStyles();
     const router = useRouter();
-    
+
     const [rowsList, setRowsList] = useState([]);
 
     const [searchPapel, setSearchPapel] = useState('');
@@ -80,30 +81,62 @@ function FundoImobiliario({ list }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [open, setOpen] = useState(false);
 
-    function handleDetail(row) {       
-        router.push({
-            pathname:  '/fundo-imobiliario/detail',
-            query: { sigla: row.sigla },
-        }) 
-    }
-
     useEffect(() => {
         setRowsList(list)
     }, []);
 
+    function handleDetail(row) {
+        router.push({
+            pathname: '/stock/detail',
+            query: { sigla: row.sigla },
+        })
+    }
 
     const handleSearchPapel = async () => {
         setRowsList([])
         if (searchPapel !== '') {
-            const res = await fetch(FUNDO_IMOBILIARIO_URL + '/info-gerais-by-sigla/' + searchPapel )
+            const res = await fetch(STOCK_URL + '/info-gerais-by-sigla/' + searchPapel)
             const list = await res.json()
             setRowsList(list)
         }
         else {
-            const res = await fetch(FUNDO_IMOBILIARIO_URL + '/info-gerais')
+            const res = await fetch(STOCK_URL + '/info-gerais')
             const list = await res.json()
             setRowsList(list)
-        }
+        }        
+    }
+
+    
+    const handleAddAtivoAnalise = async (row) => {
+
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/stock/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Stock adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
+    }
+
+    const handleAddAnalise = async (row) => {
+
+        const response = await fetch(STOCK_ANALISE_URL + '/add-stock/' + row.sigla, {
+            method: 'POST',
+            body: JSON.stringify(
+                {                
+                    
+                }),
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        const data = await response.json()           
+        alert('Stock adicionada na lista de analises: ' + row.sigla) 
     }
 
     function handleChange(event, field) {
@@ -123,9 +156,9 @@ function FundoImobiliario({ list }) {
 
     const handleFilter = async () => {
         setRowsList([]);
-        const res = await fetch(FUNDO_IMOBILIARIO_URL + '/filter-info-gerais?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
+        const res = await fetch(STOCK_URL + '/filter-info-gerais?orderFilter=' + selectOrdenacao + '&typeOrderFilter=' + selectTipoOrdenacao)
         const list = await res.json()
-        setRowsList(list)      
+        setRowsList(list)
     }
 
     function handleClickMenu(event) {
@@ -139,61 +172,30 @@ function FundoImobiliario({ list }) {
 
     function handleSelect(event, select) {
         if ( select === 'mapaDividendos'){
-            router.push('/fundo-imobiliario/mapa-dividendos')
+            router.push('/stock/mapa-dividendos')
         }        
         else if ( select === 'simularValorInvest'){            
-            router.push('/fundo-imobiliario/simular-valor-invest')
-        }  
+            router.push('/stock/simular-valor-invest')
+        }    
         else if ( select === 'simularValorRendimentoCotas'){            
-            router.push('/fundo-imobiliario/simular-valor-rendimento-cotas')
-        }  
-        else if ( select === 'simularInvestimentoVariosFundos'){            
-            router.push('/fundo-imobiliario/simular-investimento-varios-fundos')
-        } 
+            router.push('/stock/simular-valor-rendimento-cotas')
+        }               
+        else if ( select === 'simularInvestimentoVariasStocks'){            
+            router.push('/stock/simular-investimento-varias-stocks')
+        }     
         else if ( select === 'calculoPorcentagemCrescimentoCotacoes'){            
-            router.push('/fundo-imobiliario/calcula-porcentagem-crescimento-cotacoes')
-        } 
-        else if ( select === 'analiseFundos'){            
-            router.push('/fundo-imobiliario/analises')
-        }          
+            router.push('/stock/calcula-porcentagem-crescimento-cotacoes')
+        }  
+        else if ( select === 'analisesStocks'){            
+            router.push('/stock/analises')
+        }  
+                     
     };
 
-    const handleAddAtivoAnalise = async (row) => {
-
-        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/fundo imobiliario/' + row.sigla, {
-            method: 'POST',
-            body: JSON.stringify(
-                {                
-                    
-                }),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
-        const data = await response.json()           
-        alert('Fundo Imobiliario adicionado na lista de Ativos sendo analisados: ' + row.sigla) 
-    }
-
-    const handleAddAnalise = async (row) => {
-
-        const response = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/add-fundo/' + row.sigla, {
-            method: 'POST',
-            body: JSON.stringify(
-                {                
-                    
-                }),
-            headers: {
-                'Content-type': 'application/json'
-            }
-        })
-        const data = await response.json()           
-        alert('Fundo Imobiliario adicionado na lista de analises: ' + row.sigla) 
-    }
-    
 
     return (
         <Layout title="Quantitative System">
-            <h1>Lista de Fundos Imobiliarios</h1>
+            <h1>Lista de Stocks</h1>
 
             <br></br> <br></br>
 
@@ -262,13 +264,13 @@ function FundoImobiliario({ list }) {
 
                     <td>
                         <Button
-                            id="basic-button"                            
+                            id="basic-button"
                             variant="contained"
-                            aria-haspopup="true"                            
+                            aria-haspopup="true"
                             onClick={handleFilter}
                             className={classes.text}
                         >
-                           Filtrar
+                            Filtrar
                         </Button>
 
                     </td>
@@ -298,15 +300,17 @@ function FundoImobiliario({ list }) {
                             <MenuItem onClick={(e) => handleSelect(e, 'mapaDividendos')}>Mapa Dividendos</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorInvest')}>Simular Valor Investimento</MenuItem>
                             <MenuItem onClick={(e) => handleSelect(e, 'simularValorRendimentoCotas')}>Simular Valor Rendimento por Quant. Cotas</MenuItem>
-                            <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariosFundos')}>Simular Investimento Vários Fundos Imobiarios</MenuItem>                           
-                            <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Fundos Imobiliarios</MenuItem>
-                            <MenuItem onClick={(e) => handleSelect(e, 'analiseFundos')}>Análises Fundos Imobiliarios</MenuItem>    
+                            <MenuItem onClick={(e) => handleSelect(e, 'simularInvestimentoVariasStocks')}>Simular Investimento Várias Stocks</MenuItem>                            
+                            <MenuItem onClick={(e) => handleSelect(e, 'calculoPorcentagemCrescimentoCotacoes')}>Calcula Porcentagem Crescimento Stocks</MenuItem>
+                            <MenuItem onClick={(e) => handleSelect(e, 'analisesStocks')}>Análises Stocks</MenuItem>
                         </Menu>
                     </td>
                 </tr>
             </table>
 
-                <br></br> <br></br>
+
+
+            <br></br> <br></br>
 
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 1040 }}>
@@ -335,9 +339,10 @@ function FundoImobiliario({ list }) {
                                             {row.dividendYield}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
-                                                <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>    
-                                                <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>      
-                                                <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>                                
+                                            <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>
+                                            <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>
+                                            <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
+                                            
                                         </TableCell>
                                     </TableRow>
                                 );
@@ -352,10 +357,10 @@ function FundoImobiliario({ list }) {
     );
 }
 
-export default FundoImobiliario;
+export default Stocks;
 
 export async function getStaticProps(context) {
-    const res = await fetch(FUNDO_IMOBILIARIO_URL + '/info-gerais')
+    const res = await fetch(STOCK_URL + '/info-gerais')
     const list = await res.json()
     return {
         props: {

@@ -9,10 +9,10 @@ import TabPanel from '@mui/lab/TabPanel';
 import { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { withRouter } from 'next/router';
-import { Button } from '@mui/material'
+
 
 import { useRouter } from 'next/router'
-import { FUNDO_IMOBILIARIO_ANALISE_URL, FUNDO_IMOBILIARIO_COTACAO_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants';
+import { ATIVOS_ANALISE_URL, STOCK_ANALISE_URL, STOCK_COTACAO_URL } from '../../../constants/constants';
 import TabListCotacoesDiarias from './TabListCotacoesDiarias';
 import TabListCotacoesSemanais from './TabListCotacoesSemanais';
 import TabListCotacoesMensais from './TabListCotacoesMensais';
@@ -23,6 +23,7 @@ import TabListDividendos from './TabListDividendos';
 import TabValorRendimentoDividendos from './TabValorRendimentoDividendos';
 import TabValorRendimentoDividendosQuantCotas from './TabValorRendimentoDividendosQuantCotas';
 import TabListRoiDividendoCotacao from './TabListRoiDividendoCotacao';
+import { Button } from '@mui/material'
 
 
 const useStyles = makeStyles({
@@ -30,13 +31,23 @@ const useStyles = makeStyles({
         background: 'green',
         color: 'white'
     },
+    box: {
+        paddingTop: '20px'
+    },
+    text: {
+        paddingTop: '15px'
+    },
+    button: {
+        paddingTop: '25px',
+        maxWidth: '850px'
+    },
     buttonback: {
         paddingTop: '25px',
         maxWidth: '250px'
     },
 });  
 
-function index({detalheFundo}) {
+function index({detalheStock}) {
     const [value, setValue] = useState('1');    
     const classes = useStyles();    
       
@@ -49,7 +60,7 @@ function index({detalheFundo}) {
     };
 
     useEffect(() => { 
-        setDetail(detalheFundo)
+        setDetail(detalheStock)
     }, [router.query]);
 
     function goBack() {
@@ -58,7 +69,7 @@ function index({detalheFundo}) {
 
     const handleAddAtivoAnalise = async (event) => {
 
-        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/fundo imobiliario/' + detalheFundo.sigla, {
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/stock/' + detail.sigla, {
             method: 'POST',
             body: JSON.stringify(
                 {                
@@ -69,12 +80,12 @@ function index({detalheFundo}) {
             }
         })
         const data = await response.json()           
-        alert('Fundo Imobiliario adicionado na lista de Ativos sendo analisados: ' + detalheFundo.sigla) 
+        alert('stock adicionada na lista de Ativos sendo analisados: ' + detail.sigla) 
     }
 
     const handleAddAnalise = async (event) => {
 
-        const response = await fetch(FUNDO_IMOBILIARIO_ANALISE_URL + '/add-fundo/' + detalheFundo.sigla, {
+        const response = await fetch(STOCK_ANALISE_URL + '/add-stock/' + detail.sigla, {
             method: 'POST',
             body: JSON.stringify(
                 {                
@@ -85,26 +96,25 @@ function index({detalheFundo}) {
             }
         })
         const data = await response.json()           
-        alert('Fundo Imobiliario adicionado na lista de analises: ' + detalheFundo.sigla) 
+        alert('stock adicionada na lista de analises: ' + detail.sigla) 
     }
-
 
     return (
         <Layout>
 
             <br></br>
             
-            <h1> Tela de Detalhes do Fundo Imobiliario</h1>            
- 
+            <h1>Tela de Detalhes da stock</h1>            
+
             <br></br>
 
-            <p><strong> Fundo imobiliario selecionado:  </strong>{detalheFundo.sigla}</p>
+            <p><strong> stock selecionada:  </strong>{detalheStock.sigla}</p>
 
             <br></br>  
 
-            <p><strong> Dividend Yield (em %):  </strong>{detalheFundo.dividendYield}</p>
+            <p><strong> Dividend Yield (em %):  </strong>{detalheStock.dividendYield}</p>
 
-            <br></br>  
+            <br></br> 
 
             <table>
                 <tr>
@@ -112,7 +122,7 @@ function index({detalheFundo}) {
                         <Button variant="contained" fullWidth="true" onClick={goBack}>Voltar</Button>
                     </td>
                     <td>
-                    <Button variant='contained' onClick={(e) => handleAddAnalise(e)} >Add Lista Análise Fundos Imobiliários</Button>
+                    <Button variant='contained' onClick={(e) => handleAddAnalise(e)} >Add Lista Análise Stocks</Button>
                      
                     </td>
                     <td>
@@ -120,7 +130,9 @@ function index({detalheFundo}) {
                     </td>
                 </tr>
             </table>
+            
 
+            
 
             <br></br> <br></br>
 
@@ -141,37 +153,38 @@ function index({detalheFundo}) {
                         </TabList>
                     </Box>
                     <TabPanel value="1">
-                        <TabListCotacoesDiarias list={detalheFundo.listCotacaoDiario}  />
+                        <TabListCotacoesDiarias list={detalheStock.listCotacaoDiario}  />
                     </TabPanel>
 
                     <TabPanel value="2">
-                        <TabListCotacoesSemanais list={detalheFundo.listCotacaoSemanal}  />                    
+                        <TabListCotacoesSemanais list={detalheStock.listCotacaoSemanal}  />                    
                     </TabPanel>
 
                     <TabPanel value="3">
-                         <TabListCotacoesMensais list={detalheFundo.listCotacaoMensal}   />                    
+                         <TabListCotacoesMensais list={detalheStock.listCotacaoMensal}   />                    
                     </TabPanel>
                     <TabPanel value="4">
-                         <TabListIncreasePercentDiario list={detalheFundo.listIncreasePercentDiario}  />
+                         <TabListIncreasePercentDiario list={detalheStock.listIncreasePercentDiario}  />
                     </TabPanel>
                     <TabPanel value="5">
-                        <TabListIncreasePercentSemanal list={detalheFundo.listIncreasePercentSemanal}  />
+                        <TabListIncreasePercentSemanal list={detalheStock.listIncreasePercentSemanal}  />
                     </TabPanel>
                     <TabPanel value="6">
-                        <TabListIncreasePercentMensal list={detalheFundo.listIncreasePercentMensal}  />
+                        <TabListIncreasePercentMensal list={detalheStock.listIncreasePercentMensal}  />
                     </TabPanel>
                     <TabPanel value="7">
-                        <TabListDividendos list={detalheFundo.listDividendos}  />                    
+                        <TabListDividendos list={detalheStock.listDividendos}  />                    
                     </TabPanel>
                     <TabPanel value="8">
-                        <TabListRoiDividendoCotacao list={detalheFundo.listRoiDividendoCotacao}  />                    
+                        <TabListRoiDividendoCotacao  list={detalheStock.listRoiDividendoCotacao}/>                    
                     </TabPanel>
                     <TabPanel value="9">
-                        <TabValorRendimentoDividendos ativo={detalheFundo.sigla} />                    
+                        <TabValorRendimentoDividendos ativo={detalheStock.sigla} />                    
                     </TabPanel>
                     <TabPanel value="10">
-                        <TabValorRendimentoDividendosQuantCotas  ativo={detalheFundo.sigla}/>                    
+                        <TabValorRendimentoDividendosQuantCotas  ativo={detalheStock.sigla}/>                    
                     </TabPanel>
+                    
                 </TabContext>
             </Box>
         </Layout>                
@@ -183,11 +196,11 @@ export default index;
 export async function getServerSideProps({ query }) {
     
     const sigla = query.sigla
-    const res = await fetch(FUNDO_IMOBILIARIO_COTACAO_URL + '/cotacao-full-by-sigla/'+sigla)
-    const detalheFundo = await res.json()        
+    const res = await fetch(STOCK_COTACAO_URL + '/cotacao-full-by-sigla/'+sigla)
+    const detalheStock = await res.json()        
     return {
       props: {
-        detalheFundo
+        detalheStock
       }, // will be passed to the page component as props
     }
 }
