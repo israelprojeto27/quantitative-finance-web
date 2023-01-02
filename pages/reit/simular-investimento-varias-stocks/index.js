@@ -32,7 +32,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
-import { STOCK_SIMULACAO_INVESTIMENTO_URL, STOCK_ANALISE_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants'
+import { REIT_SIMULACAO_INVESTIMENTO_URL, REIT_ANALISE_URL, ATIVOS_ANALISE_URL } from '../../../constants/constants'
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -93,7 +93,7 @@ export const columnsListDividendos = [
     { id: 3, label: 'Siglas Envolvidas', align: 'left', minWidth: 10, },    
 ];
 
-function SimularInvestimentoVariasStocks({ simulacao }) {
+function SimularInvestimentoVariasReits({ simulacao }) {
 
     const classes = useStyles();
     const router = useRouter();
@@ -117,7 +117,7 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
 
     
     const handleUpdateValorInvestimento = async () => {
-        const response = await fetch(STOCK_SIMULACAO_INVESTIMENTO_URL, {
+        const response = await fetch(REIT_SIMULACAO_INVESTIMENTO_URL, {
             method: 'POST',
             body: JSON.stringify(
                 {                
@@ -133,7 +133,7 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
 
     const handleSubmitGerarSimulacao = async () => {    
         setOpenResult(false)
-        const res = await fetch(STOCK_SIMULACAO_INVESTIMENTO_URL + '/simula-investivemento/' + periodoInicio + '/' + periodoFim)
+        const res = await fetch(REIT_SIMULACAO_INVESTIMENTO_URL + '/simula-investivemento/' + periodoInicio + '/' + periodoFim)
         const rs = await res.json()
         setResultado(rs)
         setOpenResult(true)
@@ -153,7 +153,7 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
     }
 
     function goAddSimulacaoInvestimentoDetail(){
-        router.push('/stock/simular-investimento-varias-stocks/add-simular-investimento-detail')
+        router.push('/reit/simular-investimento-varias-reits/add-simular-investimento-detail')
     }
 
     const handleCloseDialog = () => {
@@ -163,11 +163,11 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
     const handleSubmitDelete = async () => {        
         setOpenDialog(false);
 
-        const response = await fetch(STOCK_SIMULACAO_INVESTIMENTO_URL  + '/delete-simulacao-detail-investimento/'+ siglaSelecionada, {
+        const response = await fetch(REIT_SIMULACAO_INVESTIMENTO_URL  + '/delete-simulacao-detail-investimento/'+ siglaSelecionada, {
             method: 'DELETE'           
         })
         const data = await response.json()        
-        router.push('/stock/simular-investimento-varias-stocks/') 
+        router.push('/reit/simular-investimento-varias-reits/') 
     };    
 
     function handleDelete(sigla) {    
@@ -178,20 +178,20 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
 
     function handleEdit(row) {    
         router.push({
-            pathname: '/stock/simular-investimento-varias-stocks/edit-simular-investimento-detail',
+            pathname: '/reit/simular-investimento-varias-reits/edit-simular-investimento-detail',
             query: { object: JSON.stringify(row) },
         })
     }
 
     function handleDetail(row) {
         router.push({
-            pathname: '/stock/detail',
+            pathname: '/reit/detail',
             query: { sigla: row.sigla },
         })
     }
 
     function goBack(){
-        router.push('/stock')
+        router.push('/reit')
     }
 
 
@@ -202,7 +202,7 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
 
     const handleAddAtivoAnalise = async (row) => {
 
-        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/acao/' + row.sigla, {
+        const response = await fetch(ATIVOS_ANALISE_URL + '/add-analise-ativo/reit/' + row.sigla, {
             method: 'POST',
             body: JSON.stringify(
                 {                
@@ -213,12 +213,12 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
             }
         })
         const data = await response.json()           
-        alert('Stock adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
+        alert('reit adicionada na lista de Ativos sendo analisados: ' + row.sigla) 
     }
 
     const handleAddAnalise = async (row) => {
 
-        const response = await fetch(STOCK_ANALISE_URL + '/add-stock/' + row.sigla, {
+        const response = await fetch(REIT_ANALISE_URL + '/add-reit/' + row.sigla, {
             method: 'POST',
             body: JSON.stringify(
                 {                
@@ -229,7 +229,7 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
             }
         })
         const data = await response.json()           
-        alert('Stock adicionada na lista de analises: ' + row.sigla) 
+        alert('reit adicionada na lista de analises: ' + row.sigla) 
     }
 
     return (
@@ -481,11 +481,11 @@ function SimularInvestimentoVariasStocks({ simulacao }) {
     );
 }
 
-export default SimularInvestimentoVariasStocks;
+export default SimularInvestimentoVariasReits;
 
 
 export async function getStaticProps(context) {
-    const res = await fetch(STOCK_SIMULACAO_INVESTIMENTO_URL )
+    const res = await fetch(REIT_SIMULACAO_INVESTIMENTO_URL )
     const simulacao = await res.json()
     return {
         props: {

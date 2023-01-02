@@ -30,7 +30,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
  
 
-import { STOCK_DIVIDENDO_URL } from '../../../constants/constants'
+import { REIT_DIVIDENDO_URL } from '../../../constants/constants'
 
 
 const useStyles = makeStyles({
@@ -99,7 +99,7 @@ function TabValorRendimentoDividendos({ativo}) {
 
     const handleSubmit = async () => {
         setExibeResultado(false)
-        const res = await fetch(STOCK_DIVIDENDO_URL + '/simula-rendimento-dividendo-by-sigla/' + searchPapel + '/' + valorInvestimento)
+        const res = await fetch(REIT_DIVIDENDO_URL + '/simula-rendimento-dividendo-by-sigla/' + searchPapel + '/' + valorInvestimento)
         const resultado = await res.json()
         setResult(resultado)
         setExibeResultado(true)

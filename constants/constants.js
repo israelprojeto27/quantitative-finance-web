@@ -46,6 +46,18 @@ export const STOCK_ANALISE_URL = BASE_URL + '/analise-stock';
 
 
 
+export const REIT_URL = BASE_URL + '/reit';
+
+export const REIT_DIVIDENDO_URL = BASE_URL + '/dividendo-reit';
+
+export const REIT_COTACAO_URL = BASE_URL + '/cotacao-reit';
+
+export const REIT_SIMULACAO_INVESTIMENTO_URL = BASE_URL + '/simula-investimento-reit';
+
+export const REIT_ANALISE_URL = BASE_URL + '/analise-reit';
+
+
+
 export const PARAMETRO_URL = BASE_URL + '/parametro';
 
 export const ATIVOS_URL = BASE_URL + '/ativos';

@@ -30,7 +30,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
  
 
-import { STOCK_DIVIDENDO_URL } from '../../../constants/constants'
+import { REIT_DIVIDENDO_URL } from '../../../constants/constants'
 
 
 const useStyles = makeStyles({
@@ -76,12 +76,12 @@ export const columnsList = [
     
 ];
 
-function TabValorRendimentoDividendos({ativo}) {
+function TabValorRendimentoDividendosQuantCotas({ativo}) {
 
     const classes = useStyles();
     const router = useRouter();
 
-    const [valorInvestimento, setValorInvestimento] = useState('');
+    const [quantidadeCotas, setQuantidadeCotas] = useState('');
     const [searchPapel, setSearchPapel] = useState('');
     const [exibeResultado, setExibeResultado] = useState(false);
 
@@ -92,14 +92,14 @@ function TabValorRendimentoDividendos({ativo}) {
     }, []);
 
     function handleChange(event, field) {
-        if (field === 'valorInvestimento') {
-            setValorInvestimento(event.currentTarget.value);
+        if (field === 'quantidadeCotas') {
+            setQuantidadeCotas(event.currentTarget.value);
         }
     }
 
     const handleSubmit = async () => {
         setExibeResultado(false)
-        const res = await fetch(STOCK_DIVIDENDO_URL + '/simula-rendimento-dividendo-by-sigla/' + searchPapel + '/' + valorInvestimento)
+        const res = await fetch(REIT_DIVIDENDO_URL + '/simula-rendimento-dividendo-by-sigla-by-cotas/' + searchPapel + '/' + quantidadeCotas)
         const resultado = await res.json()
         setResult(resultado)
         setExibeResultado(true)
@@ -107,7 +107,7 @@ function TabValorRendimentoDividendos({ativo}) {
 
     return (
         <>
-            <h1> Tab para simulação de Rendimento Cotas Dividendos</h1>
+            <h1> Tab para simulação de Rendimento  Dividendos por Quantidade Cotas</h1>
 
             <br></br> <br></br>
 
@@ -123,9 +123,9 @@ function TabValorRendimentoDividendos({ativo}) {
                 <div className={classes.text}>
                     <TextField
                         id="outlined-required"
-                        label="Valor Investimento R$"
-                        value={valorInvestimento}
-                        onChange={(e) => handleChange(e, 'valorInvestimento')}
+                        label="Quantidade Cotas"
+                        value={quantidadeCotas}
+                        onChange={(e) => handleChange(e, 'quantidadeCotas')}
                     />
                 </div> 
 
@@ -196,4 +196,4 @@ function TabValorRendimentoDividendos({ativo}) {
     );
 }
 
-export default TabValorRendimentoDividendos;
+export default TabValorRendimentoDividendosQuantCotas;
