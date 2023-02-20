@@ -45,6 +45,9 @@ const useStyles = makeStyles({
         paddingTop: '25px',
         maxWidth: '250px'
     },
+    paddingTable: {
+        paddingRight: '55px'
+    }
 });  
 
 function index({detalheAcao}) {
@@ -112,7 +115,42 @@ function index({detalheAcao}) {
 
             <br></br>  
 
-            <p><strong> Dividend Yield (em %):  </strong>{detalheAcao.dividendYield}</p>
+            <table >
+                <tr>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Dividend Yield (em %):  </strong>{detalheAcao.dividendYield}</p>
+                    </td>
+                    <td>
+                        <p><strong> ROE:  </strong>{detalheAcao.roe}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong> P/VP:  </strong>{detalheAcao.pvp}</p>
+                    </td>
+                    <td>
+                        <p><strong> P/L:  </strong>{detalheAcao.pl}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong> PSR:  </strong>{detalheAcao.psr}</p>
+                    </td>
+                    <td>
+                        <p><strong> P/Ativos:  </strong>{detalheAcao.pativos}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p><strong> P/Ebit:  </strong>{detalheAcao.pebit}</p>
+                    </td>
+                    <td>
+                        <p><strong> Margem Ebit:  </strong>{detalheAcao.margemEbit}</p>
+                    </td>
+                </tr>
+            </table>
+
+            
 
             <br></br> 
 

@@ -49,7 +49,14 @@ export const columnsList = [
     { id: 6, label: 'Valor Ultimo Dividendo R$', align: 'left', minWidth: 10, },    
     { id: 7, label: 'Data Ultimo Dividendo', align: 'left', minWidth: 10, },
     { id: 8, label: 'Dividend Yield (em %)', align: 'left', minWidth: 10, },
-    { id: 9, label: 'Actions', align: 'left', minWidth: 10, },
+    { id: 9, label: 'ROE', align: 'left', minWidth: 10, hint: 'Retorno investimento'},   
+    { id: 10, label: 'P/VP', align: 'left', minWidth: 10, },   
+    { id: 11, label: 'P/L', align: 'left', minWidth: 10, },   
+    { id: 12, label: 'PSR', align: 'left', minWidth: 10, },   
+    { id: 13, label: 'P/Ativos', align: 'left', minWidth: 10, },   
+    { id: 14, label: 'P/Ebit', align: 'left', minWidth: 10, },   
+    { id: 15, label: 'Margem ebit', align: 'left', minWidth: 10, },   
+    { id: 16, label: 'Actions', align: 'left', minWidth: 10, },
 ];
 
 const useStyles = makeStyles({
@@ -284,6 +291,14 @@ function AnalisesAcoes({ list }) {
                                     <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
                                     <MenuItem value={'dataUltiDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Último Dividendo</fontSize></MenuItem>
                                     <MenuItem value={'dividendYield'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Dividend Yield (em %)</fontSize></MenuItem>
+
+                                    <MenuItem value={'roe'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>ROE</fontSize></MenuItem>
+                                    <MenuItem value={'pvp'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/VP</fontSize></MenuItem>
+                                    <MenuItem value={'pl'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/L</fontSize></MenuItem>
+                                    <MenuItem value={'psr'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>PSR</fontSize></MenuItem>
+                                    <MenuItem value={'p_ativos'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/Ativos</fontSize></MenuItem>
+                                    <MenuItem value={'p_ebit'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/Ebit</fontSize></MenuItem>
+                                    <MenuItem value={'marg_ebit'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Margem Ebit</fontSize></MenuItem>
                                 </Select>
 
                             </FormControl>
@@ -411,10 +426,32 @@ function AnalisesAcoes({ list }) {
                                         <TableCell key={row.id} align={row.align}>
                                             {row.dataUltimoDividendoFmt}
                                         </TableCell> 
-
                                         <TableCell key={row.id} align={row.align}>
                                             {row.dividendYield}
                                         </TableCell> 
+
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.roe}
+                                        </TableCell> 
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pvp}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pl}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.psr}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pativos}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pebit}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.margemEbit}
+                                        </TableCell>
+
                                         <TableCell key={row.id} align={row.align}>   
                                             <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>  
                                             <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>                                       

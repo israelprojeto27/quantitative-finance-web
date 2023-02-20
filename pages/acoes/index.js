@@ -238,7 +238,15 @@ function Acoes({ list }) {
                                     <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
                                     <MenuItem value={'dataUltiDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Último Dividendo</fontSize></MenuItem>
                                     <MenuItem value={'dividendYield'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Dividend Yield (em %)</fontSize></MenuItem>
-                                </Select>
+
+                                    <MenuItem value={'roe'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>ROE</fontSize></MenuItem>
+                                    <MenuItem value={'pvp'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/VP</fontSize></MenuItem>
+                                    <MenuItem value={'pl'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/L</fontSize></MenuItem>
+                                    <MenuItem value={'psr'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>PSR</fontSize></MenuItem>
+                                    <MenuItem value={'p_ativos'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/Ativos</fontSize></MenuItem>
+                                    <MenuItem value={'p_ebit'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/Ebit</fontSize></MenuItem>
+                                    <MenuItem value={'marg_ebit'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Margem Ebit</fontSize></MenuItem>
+                                </Select> 
 
                             </FormControl>
                         </Box>
@@ -339,6 +347,27 @@ function Acoes({ list }) {
                                             {row.dividendYield}
                                         </TableCell>
                                         <TableCell key={row.id} align={row.align}>
+                                            {row.roe}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pvp}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pl}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.psr}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pativos}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pebit}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.margEbit}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
                                             <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>
                                             <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>
                                             <Button variant='succes' onClick={() => handleAddAtivoAnalise(row)}> <ArrowCircleUpIcon /> </Button>
@@ -346,7 +375,7 @@ function Acoes({ list }) {
                                         </TableCell>
                                     </TableRow>
                                 );
-                            })}
+                            })} 
 
                         </TableBody>
                     </Table>

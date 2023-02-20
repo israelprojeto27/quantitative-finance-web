@@ -34,6 +34,9 @@ const useStyles = makeStyles({
         paddingTop: '25px',
         maxWidth: '250px'
     },
+    paddingTable: {
+        paddingRight: '55px'
+    }
 });  
 
 function index({detalheFundo}) {
@@ -102,7 +105,68 @@ function index({detalheFundo}) {
 
             <br></br>  
 
-            <p><strong> Dividend Yield (em %):  </strong>{detalheFundo.dividendYield}</p>
+            <table>
+                <tr>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Dividend Yield (em %):  </strong>{detalheFundo.dividendYield}</p>
+                    </td>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Dividend Cota:  </strong>{detalheFundo.dividendoCota}</p>
+                    </td>
+                    <td>
+                        <p><strong> P/PVP:  </strong>{detalheFundo.pvp}</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td className={classes.paddingTable}>
+                        <p><strong> FFO Yield:  </strong>{detalheFundo.ffoYield}</p>
+                    </td>
+                    <td className={classes.paddingTable}>
+                        <p><strong> FFO Cota:  </strong>{detalheFundo.ffoCota}</p>
+                    </td>
+                    <td>
+                        <p><strong> VP/Cota:  </strong>{detalheFundo.vpCota}</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Valor Mercado  </strong>{detalheFundo.valorMercado}</p>
+                    </td>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Nro Cota:  </strong>{detalheFundo.nroCota}</p>
+                    </td>
+                    <td>
+                        <p><strong> Quant. Imoveis:  </strong>{detalheFundo.qtdImoveis}</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Cap Rate:  </strong>{detalheFundo.capRate}</p>
+                    </td>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Quant. Unid:  </strong>{detalheFundo.qtdUnid}</p>
+                    </td>
+                    <td>
+                        <p><strong> Aluguel m2:  </strong>{detalheFundo.aluguelM2}</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Vacancia Media:  </strong>{detalheFundo.vacanciaMedia}</p>
+                    </td>
+                    <td className={classes.paddingTable}>
+                        <p><strong> Imoveis/Pl:  </strong>{detalheFundo.imoveisPl}</p>
+                    </td>
+                    <td>
+                        <p><strong> Preço m2:  </strong>{detalheFundo.precoM2}</p>
+                    </td>
+                </tr>
+
+            </table>            
 
             <br></br>  
 

@@ -28,7 +28,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { makeStyles } from '@material-ui/styles';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
-import HeadList from '../../components/HeadList/HeadList';
+import HeadListFundoImobiliario from '../../components/HeadList/HeadListFundoImobiliario';
 import { FUNDO_IMOBILIARIO_URL } from '../../constants/constants';
 import { FUNDO_IMOBILIARIO_ANALISE_URL } from '../../constants/constants';
 import {  ATIVOS_ANALISE_URL } from '../../constants/constants';
@@ -236,8 +236,21 @@ function FundoImobiliario({ list }) {
                                     <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
                                     <MenuItem value={'dataUltiDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Último Dividendo</fontSize></MenuItem>
                                     <MenuItem value={'dividendYield'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Dividend Yield (em %)</fontSize></MenuItem>
-                                </Select>
 
+                                    <MenuItem value={'dividendoCota'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Dividend Cota</fontSize></MenuItem>
+                                    <MenuItem value={'ffoYield'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>FFO Yield</fontSize></MenuItem>
+                                    <MenuItem value={'ffoCota'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>FFO Cota</fontSize></MenuItem>
+                                    <MenuItem value={'vpCota'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>VP/Cota</fontSize></MenuItem>
+                                    <MenuItem value={'valorMercado'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Mercado</fontSize></MenuItem>
+                                    <MenuItem value={'nroCota'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Nro Cota</fontSize></MenuItem>
+                                    <MenuItem value={'qtdImoveis'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Quant. Imoveis</fontSize></MenuItem>
+                                    <MenuItem value={'capRate'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Cap Rate</fontSize></MenuItem>
+                                    <MenuItem value={'qtdUnid'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Quant. Unid</fontSize></MenuItem>
+                                    <MenuItem value={'aluguelM2'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Aluguel m2</fontSize></MenuItem>
+                                    <MenuItem value={'vacanciaMedia'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Vacancia Media</fontSize></MenuItem>
+                                    <MenuItem value={'imoveisPl'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Imoveis Pl</fontSize></MenuItem>
+                                    <MenuItem value={'precoM2'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Preço m2</fontSize></MenuItem>
+                                </Select>
                             </FormControl>
                         </Box>
                     </td>
@@ -311,7 +324,7 @@ function FundoImobiliario({ list }) {
             <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                 <TableContainer sx={{ maxHeight: 1040 }}>
                     <Table stickyHeader aria-label="sticky table">
-                        <HeadList />
+                        <HeadListFundoImobiliario />
                         <TableBody>
                             {rowsList.map((row) => {
                                 return (
@@ -334,6 +347,51 @@ function FundoImobiliario({ list }) {
                                         <TableCell key={row.id} align={row.align}>
                                             {row.dividendYield}
                                         </TableCell>
+
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.dividendoCota}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.ffoYield}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.ffoCota}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pvp}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.vpCota}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.valorMercado}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.nroCota}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.qtdImoveis}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.capRate}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.qtdUnid}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.aluguelM2}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.vacanciaMedia}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.imoveisPl}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.precoM2}
+                                        </TableCell>
+                                        
+
                                         <TableCell key={row.id} align={row.align}>
                                                 <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>    
                                                 <Button variant='succes' onClick={() => handleAddAnalise(row)}> <AddBoxIcon /> </Button>      
@@ -341,7 +399,7 @@ function FundoImobiliario({ list }) {
                                         </TableCell>
                                     </TableRow>
                                 );
-                            })}
+                            })}  
 
                         </TableBody>
                     </Table>

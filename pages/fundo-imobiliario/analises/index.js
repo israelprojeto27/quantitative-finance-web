@@ -42,7 +42,22 @@ export const columnsList = [
     { id: 6, label: 'Valor Ultimo Dividendo R$', align: 'left', minWidth: 10, },    
     { id: 7, label: 'Data Ultimo Dividendo', align: 'left', minWidth: 10, },
     { id: 8, label: 'Dividend Yield (em %)', align: 'left', minWidth: 10, },
-    { id: 9, label: 'Actions', align: 'left', minWidth: 10, },
+    { id: 9, label: 'Dividendo Cota', align: 'left', minWidth: 10, hint: 'Retorno investimento'},   
+    { id: 10, label: 'FFO Yield', align: 'left', minWidth: 10, },   
+    { id: 11, label: 'FFO Cota', align: 'left', minWidth: 10, },   
+    { id: 12, label: 'P/VP', align: 'left', minWidth: 10, },   
+    { id: 13, label: 'VP/Cota', align: 'left', minWidth: 10, },   
+    { id: 14, label: 'Valor Mercado', align: 'left', minWidth: 10, },   
+    { id: 15, label: 'Nro Cota', align: 'left', minWidth: 10, },   
+    { id: 16, label: 'Quant. Imoveis', align: 'left', minWidth: 10, },   
+    { id: 17, label: 'Cap Rate', align: 'left', minWidth: 10, },   
+    { id: 18, label: 'Qtd Unid', align: 'left', minWidth: 10, },   
+    { id: 19, label: 'Aluguel m2', align: 'left', minWidth: 10, },   
+    { id: 20, label: 'Vacancia Media', align: 'left', minWidth: 10, },   
+    { id: 21, label: 'Imoveis/pl', align: 'left', minWidth: 10, },   
+    { id: 22, label: 'Preço m2', align: 'left', minWidth: 10, },   
+
+    { id: 23, label: 'Actions', align: 'left', minWidth: 10, },
 ];
 
 const useStyles = makeStyles({
@@ -223,6 +238,22 @@ function AnalisesFundosImobiliarios({ list }) {
                                     <MenuItem value={'valorUltDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Último Dividendo R$</fontSize></MenuItem>
                                     <MenuItem value={'dataUltiDividendo'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Data Último Dividendo</fontSize></MenuItem>
                                     <MenuItem value={'dividendYield'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Dividend Yield (em %)</fontSize></MenuItem>
+
+                                    
+                                    <MenuItem value={'dividendoCota'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Dividend Cota</fontSize></MenuItem>
+                                    <MenuItem value={'ffoYield'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>FFO Yield</fontSize></MenuItem>
+                                    <MenuItem value={'ffoCota'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>FFO Cota</fontSize></MenuItem>
+                                    <MenuItem value={'pvp'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>P/VP</fontSize></MenuItem>
+                                    <MenuItem value={'vpCota'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>VP/Cota</fontSize></MenuItem>
+                                    <MenuItem value={'valorMercado'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Valor Mercado</fontSize></MenuItem>
+                                    <MenuItem value={'nroCota'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Nro Cota</fontSize></MenuItem>
+                                    <MenuItem value={'qtdImoveis'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Quant. Imoveis</fontSize></MenuItem>
+                                    <MenuItem value={'capRate'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Cap Rate</fontSize></MenuItem>
+                                    <MenuItem value={'qtdUnid'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Quant. Unid</fontSize></MenuItem>
+                                    <MenuItem value={'aluguelM2'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Aluguel m2</fontSize></MenuItem>
+                                    <MenuItem value={'vacanciaMedia'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Vacancia Media</fontSize></MenuItem>
+                                    <MenuItem value={'imoveisPl'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Imoveis Pl</fontSize></MenuItem>
+                                    <MenuItem value={'precoM2'} className={classes.selectTextOption}><fontSize className={classes.selectTextOption}>Preço m2</fontSize></MenuItem>
                                 </Select>
 
                             </FormControl>
@@ -352,6 +383,50 @@ function AnalisesFundosImobiliarios({ list }) {
                                         <TableCell key={row.id} align={row.align}>
                                             {row.dividendYield}
                                         </TableCell> 
+
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.dividendoCota}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.ffoYield}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.ffoCota}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.pvp}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.vpCota}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.valorMercado}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.nroCota}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.qtdImoveis}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.capRate}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.qtdUnid}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.aluguelM2}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.vacanciaMedia}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.imoveisPl}
+                                        </TableCell>
+                                        <TableCell key={row.id} align={row.align}>
+                                            {row.precoM2}
+                                        </TableCell>
+
 
                                         <TableCell key={row.id} align={row.align}>  
                                             <Button variant='succes' onClick={() => handleDetail(row)}> <ZoomInOutlinedIcon /> </Button>                                            

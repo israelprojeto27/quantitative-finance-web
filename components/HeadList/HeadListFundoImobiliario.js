@@ -5,7 +5,7 @@ import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@material-ui/styles';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
-import { columnsList } from './data/data'
+import { columnsListFundoImobiliario } from './data/data'
 
 
 const useStyles = makeStyles({
@@ -40,14 +40,14 @@ const useStyles = makeStyles({
     }
 });
 
-function HeadList() {
+function HeadListFundoImobiliario() {
     const classes = useStyles();
     const router = useRouter();
     return (
         <>
             <TableHead >
                 <TableRow >
-                    {columnsList.map((column) => (
+                    {columnsListFundoImobiliario.map((column) => (
                         <TableCell
                             key={column.id}
                             align={column.align}
@@ -64,4 +64,4 @@ function HeadList() {
     );
 }
 
-export default HeadList;
+export default HeadListFundoImobiliario;
